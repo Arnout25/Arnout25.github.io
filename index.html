@@ -1,7 +1,36 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+<!-- https://github.com/mdn/webgl-examples/blob/gh-pages/tutorial/sample1/index.html -->
+<!-- https://webglfundamentals.org/webgl/lessons/webgl-fundamentals.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Space Shooter</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./webgl.css" type="text/css">
+    <!-- <script type="importmap">
+      {
+        "imports": {
+          "socket.io-client": "https://cdn.socket.io/4.4.0/socket.io.esm.min.js"
+        }
+      }
+  </script> -->
+  </head>
+
+  <body style="background-color:black;">
+    <canvas id="glcanvas" width="100%" height="100%" style="position: absolute; top: 0px; left: 0px;"></canvas>
+
+    <div id="score1" style="font-family: monospace; position: absolute; left: 10px; top: 10px; width:250px; height:50px; color:white; white-space: pre; font-size:x-large;"></div>
+    <div id="score2" style="font-family: monospace; position: absolute; right: 10px; top: 10px; width:250px; height:50px; color:white; white-space: pre; font-size:x-large; text-align: right;"></div>
+    <div id="health1" style="font-family: monospace; position: absolute; left: 10px; top: 40px; width:250px; height:50px; color:white; white-space: pre; font-size:x-large;"></div>
+    <div id="health2" style="font-family: monospace; position: absolute; right: 10px; top: 40px; width:250px; height:50px; color:white; white-space: pre; font-size:x-large; text-align: right;"></div>
+    <div id="velocity1" style="font-family: monospace; position: absolute; left: 10px; top: 70px; width:250px; height:50px; color:white; white-space: pre; font-size:x-large;"></div>
+    <div id="velocity2" style="font-family: monospace; position: absolute; right: 10px; top: 70px; width:250px; height:50px; color:white; white-space: pre; font-size:x-large; text-align: right;"></div>
+    <div id="invulnerable1" style="font-family: monospace; position: absolute; left: 10px; top: 100px; width:250px; height:50px; color:cyan; white-space: pre; font-size:x-large;"></div>
+    <div id="invulnerable2" style="font-family: monospace; position: absolute; right: 10px; top: 100px; width:250px; height:50px; color:cyan; white-space: pre; font-size:x-large; text-align: right;"></div>
+    <div id="return warning1" style="font-family: monospace; position: absolute; left: 10px; top: 100px; width:250px; height:50px; color:red; white-space: pre; font-size:x-large;"></div>
+    <div id="return warning2" style="font-family: monospace; position: absolute; right: 10px; top: 100px; width:250px; height:50px; color:red; white-space: pre; font-size:x-large; text-align: right;"></div>
+  </body>
+
+  <script type="module" src="js/main.js"></script>
+  <!-- <script type="module" src="connection/screen.js"></script> -->
+
 </html>

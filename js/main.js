@@ -1,3 +1,4 @@
+//test
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //https://webglfundamentals.org/webgl/lessons/webgl-fundamentals.html

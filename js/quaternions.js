@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Quaternion = void 0;
-const vectors_js_1 = require("./vectors.js");
+import { Vector3 } from "./vectors.js";
 // import { Vector3 } from "./vectors"; // use this import statement for testing
 class Quaternion {
     constructor(...args) {
@@ -107,7 +104,7 @@ class Quaternion {
         let z2 = Math.cos(pitch) * z - Math.sin(pitch) * y2;
         let x3 = Math.cos(yaw) * x2 - Math.sin(yaw) * z2;
         let z3 = Math.cos(yaw) * z2 + Math.sin(yaw) * x2;
-        return new vectors_js_1.Vector3(x3, y3, z3);
+        return new Vector3(x3, y3, z3);
     }
     get_reverse_rotated_vec(vec) {
         //use on inverse of quaternion to get original vector before rotation
@@ -125,7 +122,7 @@ class Quaternion {
         let z3 = Math.cos(pitch) * z2 + Math.sin(pitch) * y;
         let x3 = Math.cos(roll) * x2 + Math.sin(roll) * y2;
         let y3 = Math.cos(roll) * y2 - Math.sin(roll) * x2;
-        return new vectors_js_1.Vector3(x3, y3, z3);
+        return new Vector3(x3, y3, z3);
     }
 }
-exports.Quaternion = Quaternion;
+export { Quaternion };

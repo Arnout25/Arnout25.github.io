@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Bullet = exports.draw_bullets = exports.init_bullet_shader = void 0;
 var bullet_program;
 var bullet_loc_position;
 var bullet_loc_velocity;
@@ -32,7 +29,6 @@ class Bullet {
     isused() { return this.used; }
     hit() { this.used = true; }
 }
-exports.Bullet = Bullet;
 function init_bullet_shader(gl) {
     bullet_program = gl.createProgram();
     var vertex_shader = gl.createShader(gl.VERTEX_SHADER);
@@ -111,7 +107,6 @@ function init_bullet_shader(gl) {
     bullet_loc_fov = gl.getUniformLocation(bullet_program, "fov");
     check_error(gl);
 }
-exports.init_bullet_shader = init_bullet_shader;
 function draw_bullets(gl, fov, resolution, bullet_array, camera_position, camera_orientation) {
     //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.useProgram(bullet_program);
@@ -127,4 +122,4 @@ function draw_bullets(gl, fov, resolution, bullet_array, camera_position, camera
         gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 }
-exports.draw_bullets = draw_bullets;
+export { init_bullet_shader, draw_bullets, Bullet };

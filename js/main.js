@@ -1,17 +1,14 @@
-//test
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 //https://webglfundamentals.org/webgl/lessons/webgl-fundamentals.html
 //https://www.tutorialspoint.com/webgl/webgl_drawing_a_quad.htm
-const sky_js_1 = require("./sky.js");
-const dust_particles_js_1 = require("./dust_particles.js");
-const models_js_1 = require("./models.js");
-const smoke_particles_js_1 = require("./smoke_particles.js");
-const bullets_js_1 = require("./bullets.js");
-const crosshair_js_1 = require("./crosshair.js");
-const ship_js_1 = require("./ship.js");
-const quaternions_js_1 = require("./quaternions.js");
-const vectors_js_1 = require("./vectors.js");
+import { init_sky_shader, draw_sky } from './sky.js';
+import { init_dust_shader, update_dust, draw_dust, generate_dust_array } from './dust_particles.js';
+import { init_model_shader, draw_models, check_model_collision, check_model_bullet_collision } from './models.js';
+import { init_smoke_shader, update_smoke, draw_smoke } from './smoke_particles.js';
+import { init_bullet_shader, draw_bullets } from './bullets.js';
+import { init_crosshair_shader, draw_crosshair } from './crosshair.js';
+import { Ship } from './ship.js';
+import { Quaternion } from './quaternions.js';
+import { Vector3 } from './vectors.js';
 // import { pcPlayer1 } from '../connection/screen.js';
 // import { pcPlayer2 } from '../connection/screen.js';
 const canvas = document.querySelector('#glcanvas');
@@ -59,50 +56,50 @@ var input_dict = {
     //'Period': false,
     'KeyG': false,
 };
-(0, sky_js_1.init_sky_shader)(gl);
-(0, dust_particles_js_1.init_dust_shader)(gl);
-(0, models_js_1.init_model_shader)(gl);
-(0, smoke_particles_js_1.init_smoke_shader)(gl);
-(0, bullets_js_1.init_bullet_shader)(gl);
-(0, crosshair_js_1.init_crosshair_shader)(gl);
+init_sky_shader(gl);
+init_dust_shader(gl);
+init_model_shader(gl);
+init_smoke_shader(gl);
+init_bullet_shader(gl);
+init_crosshair_shader(gl);
 class View {
     constructor(ship) {
-        this.position = new vectors_js_1.Vector3();
-        this.orientation = new quaternions_js_1.Quaternion();
+        this.position = new Vector3();
+        this.orientation = new Quaternion();
         this.follow_ship = ship;
-        this.dust_particles = (0, dust_particles_js_1.generate_dust_array)();
+        this.dust_particles = generate_dust_array();
     }
     update(dt, resolution) {
         let delay = this.follow_ship.alive() ? .2 : 0; //orientation delay
-        this.orientation = new quaternions_js_1.Quaternion(this.follow_ship.get_orientation());
+        this.orientation = new Quaternion(this.follow_ship.get_orientation());
         this.orientation.add_euler(-delay * this.follow_ship.roll_speed, -delay * this.follow_ship.pitch_speed, -delay * this.follow_ship.yaw_speed);
-        let camera_offset = this.orientation.get_rotated_vec(new vectors_js_1.Vector3(0, 3, 12));
+        let camera_offset = this.orientation.get_rotated_vec(new Vector3(0, 3, 12));
         this.position = this.follow_ship.get_position().get_added(camera_offset);
-        (0, dust_particles_js_1.update_dust)(dt, fov, resolution, this.dust_particles, this.orientation, this.follow_ship.get_velocity());
+        update_dust(dt, fov, resolution, this.dust_particles, this.orientation, this.follow_ship.get_velocity());
     }
     draw(gl, dt, fov, viewport) {
         let resolution = viewport.slice(2, 4);
         gl.viewport(...viewport);
-        (0, sky_js_1.draw_sky)(gl, fov, resolution, this.orientation);
+        draw_sky(gl, fov, resolution, this.orientation);
         gl.enable(gl.DEPTH_TEST);
         gl.clear(gl.DEPTH_BUFFER_BIT);
         gl.depthRange(0, 1); //doesn't do anything??
         //gl.depthRange(0,1); //doesn't do anything??
-        (0, models_js_1.draw_models)(gl, fov, resolution, this.position, this.orientation, ship1, ship2);
-        (0, bullets_js_1.draw_bullets)(gl, fov, resolution, ship1.get_bullets(), this.position, this.orientation);
-        (0, bullets_js_1.draw_bullets)(gl, fov, resolution, ship2.get_bullets(), this.position, this.orientation);
-        (0, dust_particles_js_1.draw_dust)(gl, dt, fov, resolution, this.dust_particles, this.follow_ship.get_velocity(), this.orientation);
-        (0, smoke_particles_js_1.draw_smoke)(gl, dt, fov, resolution, this.position, this.orientation, this.follow_ship);
+        draw_models(gl, fov, resolution, this.position, this.orientation, ship1, ship2);
+        draw_bullets(gl, fov, resolution, ship1.get_bullets(), this.position, this.orientation);
+        draw_bullets(gl, fov, resolution, ship2.get_bullets(), this.position, this.orientation);
+        draw_dust(gl, dt, fov, resolution, this.dust_particles, this.follow_ship.get_velocity(), this.orientation);
+        draw_smoke(gl, dt, fov, resolution, this.position, this.orientation, this.follow_ship);
         gl.disable(gl.DEPTH_TEST);
         gl.clear(gl.DEPTH_BUFFER_BIT);
-        (0, crosshair_js_1.draw_crosshair)(gl, dt, fov, resolution, this.orientation, this.follow_ship, ship1 == this.follow_ship ? ship2 : ship1);
+        draw_crosshair(gl, dt, fov, resolution, this.orientation, this.follow_ship, ship1 == this.follow_ship ? ship2 : ship1);
     }
 }
 gl.clearColor(0.2, 0.0, 0.2, 1.0);
 gl.clear(gl.COLOR_BUFFER_BIT);
 const fov = .8;
-var ship1 = new ship_js_1.Ship(gl, ["./resources/models/ship_player1.obj", -3.2, 10 / 6.4], new vectors_js_1.Vector3(0, 0, 3000), new quaternions_js_1.Quaternion());
-var ship2 = new ship_js_1.Ship(gl, ["./resources/models/ship_player2.obj", -3.2, 10 / 6.4], new vectors_js_1.Vector3(0, 0, -3000), new quaternions_js_1.Quaternion(0, 0, Math.PI));
+var ship1 = new Ship(gl, ["./resources/models/ship_player1.obj", -3.2, 10 / 6.4], new Vector3(0, 0, 3000), new Quaternion());
+var ship2 = new Ship(gl, ["./resources/models/ship_player2.obj", -3.2, 10 / 6.4], new Vector3(0, 0, -3000), new Quaternion(0, 0, Math.PI));
 var player1_velocity_target = 0;
 var player2_velocity_target = 0;
 let controller1_pressing_yaw = 0;
@@ -200,7 +197,7 @@ function update(dt) {
     ship1.pitch_speed = pitch_speed;
     ship1.yaw_speed = yaw_speed;
     ship1.roll_speed = roll_speed;
-    ship1.update(dt, new vectors_js_1.Vector3(0, 0, -player1_velocity_target), input_dict['KeyF'] || Boolean(controller1_pressing_shoot), ship2);
+    ship1.update(dt, new Vector3(0, 0, -player1_velocity_target), input_dict['KeyF'] || Boolean(controller1_pressing_shoot), ship2);
     //player2:
     pitch_speed = ship2.pitch_speed;
     yaw_speed = ship2.yaw_speed;
@@ -244,14 +241,14 @@ function update(dt) {
     ship2.pitch_speed = pitch_speed;
     ship2.yaw_speed = yaw_speed;
     ship2.roll_speed = roll_speed;
-    ship2.update(dt, new vectors_js_1.Vector3(0, 0, -player2_velocity_target), input_dict['Backspace'] || Boolean(controller2_pressing_shoot), ship1);
-    (0, models_js_1.check_model_bullet_collision)(dt, ship1.bullets);
-    (0, models_js_1.check_model_bullet_collision)(dt, ship2.bullets);
+    ship2.update(dt, new Vector3(0, 0, -player2_velocity_target), input_dict['Backspace'] || Boolean(controller2_pressing_shoot), ship1);
+    check_model_bullet_collision(dt, ship1.bullets);
+    check_model_bullet_collision(dt, ship2.bullets);
     ship1.check_shot(dt, ship2.get_bullets());
     ship2.check_shot(dt, ship1.get_bullets());
     ship1.check_ship_collision(dt, ship2); //only needed once, checks for both ships
-    (0, models_js_1.check_model_collision)(dt, ship1);
-    (0, models_js_1.check_model_collision)(dt, ship2);
+    check_model_collision(dt, ship1);
+    check_model_collision(dt, ship2);
     camera1.update(dt, [gl.canvas.width, gl.canvas.height]);
     camera2.update(dt, [gl.canvas.width, gl.canvas.height]);
     document.getElementById('score1').innerText = `SCORE: ` + `${Math.max(ship1.score, 0).toFixed(0)}`.padStart(9, ' ');
@@ -273,7 +270,7 @@ function loop(time) {
     var delta_time = (time - startTime) / 1000;
     startTime = time;
     update(delta_time);
-    (0, smoke_particles_js_1.update_smoke)(delta_time);
+    update_smoke(delta_time);
     gl.clearColor(0.2, 0.0, 0.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.enable(gl.DITHER);

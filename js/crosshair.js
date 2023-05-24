@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.draw_crosshair = exports.init_crosshair_shader = void 0;
-const vectors_js_1 = require("./vectors.js");
+import { Vector3 } from "./vectors.js";
 var crosshair_program;
 var crosshair_loc_direction;
 var crosshair_loc_resolution;
@@ -143,7 +140,6 @@ function init_crosshair_shader(gl) {
     crosshair_loc_resolution = gl.getUniformLocation(crosshair_program, "resolution");
     crosshair_loc_fov = gl.getUniformLocation(crosshair_program, "fov");
 }
-exports.init_crosshair_shader = init_crosshair_shader;
 function draw_crosshair(gl, dt, fov, resolution, camera_orientation, current, enemy) {
     //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.useProgram(crosshair_program);
@@ -154,7 +150,7 @@ function draw_crosshair(gl, dt, fov, resolution, camera_orientation, current, en
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     let direction;
-    direction = camera_orientation.get_reverse_rotated_vec(current.get_orientation().get_rotated_vec(new vectors_js_1.Vector3(0, 0, -1)));
+    direction = camera_orientation.get_reverse_rotated_vec(current.get_orientation().get_rotated_vec(new Vector3(0, 0, -1)));
     if (direction.get_z() < 0) {
         gl.uniform3f(crosshair_loc_direction, ...direction.get_values());
         gl.bindTexture(gl.TEXTURE_2D, aim_texture);
@@ -175,4 +171,4 @@ function draw_crosshair(gl, dt, fov, resolution, camera_orientation, current, en
     }
     check_error(gl);
 }
-exports.draw_crosshair = draw_crosshair;
+export { init_crosshair_shader, draw_crosshair };

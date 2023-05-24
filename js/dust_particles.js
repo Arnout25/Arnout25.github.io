@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generate_dust_array = exports.Dust_particle = exports.draw_dust = exports.update_dust = exports.init_dust_shader = void 0;
-const vectors_js_1 = require("./vectors.js");
+import { Vector3 } from "./vectors.js";
 // import { Vector3 } from "./vectors"; // use this import statement for testing
 var dust_program;
 var dust_loc_position;
@@ -20,12 +17,12 @@ function check_error(gl) {
 }
 class Dust_particle {
     constructor(max_dist) {
-        this.pos = new vectors_js_1.Vector3(0, 0, 0);
+        this.pos = new Vector3(0, 0, 0);
         this.range = max_dist;
         this.reset();
     }
     reset() {
-        this.pos = new vectors_js_1.Vector3(Math.random() - .5, Math.random() - .5, Math.random() - .5);
+        this.pos = new Vector3(Math.random() - .5, Math.random() - .5, Math.random() - .5);
         let m = this.range / this.pos.get_length(); //normalize, then multiply by max_dist
         this.pos.scale(m);
     }
@@ -42,7 +39,6 @@ class Dust_particle {
         }
     }
 }
-exports.Dust_particle = Dust_particle;
 function generate_dust_array(amount = 500) {
     let particle_array = [];
     for (var p = 0; p < amount; p++) {
@@ -50,7 +46,6 @@ function generate_dust_array(amount = 500) {
     }
     return particle_array;
 }
-exports.generate_dust_array = generate_dust_array;
 function init_dust_shader(gl) {
     dust_program = gl.createProgram();
     var vertex_shader = gl.createShader(gl.VERTEX_SHADER);
@@ -134,7 +129,6 @@ function init_dust_shader(gl) {
     dust_loc_fov = gl.getUniformLocation(dust_program, "fov");
     dust_loc_speed = gl.getUniformLocation(dust_program, "speed");
 }
-exports.init_dust_shader = init_dust_shader;
 function update_dust(dt, fov, resolution, particle_array, camera_orientation, velocity) {
     for (var p = 0; p < particle_array.length; p++) {
         var r_pos = camera_orientation.get_reverse_rotated_vec(particle_array[p].get_pos());
@@ -143,7 +137,6 @@ function update_dust(dt, fov, resolution, particle_array, camera_orientation, ve
         particle_array[p].move(velocity, dt, projected_pos);
     }
 }
-exports.update_dust = update_dust;
 function draw_dust(gl, dt, fov, resolution, particle_array, velocity, orientation) {
     //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.useProgram(dust_program);
@@ -160,4 +153,4 @@ function draw_dust(gl, dt, fov, resolution, particle_array, velocity, orientatio
         gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 }
-exports.draw_dust = draw_dust;
+export { init_dust_shader, update_dust, draw_dust, Dust_particle, generate_dust_array };

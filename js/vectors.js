@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Vector3 = void 0;
 class Vector3 {
     constructor(...args) {
         this.x = 0;
@@ -71,4 +68,4 @@ class Vector3 {
         return (this.x ** 2 + this.y ** 2 + this.z ** 2);
     }
 }
-exports.Vector3 = Vector3;
+export { Vector3 };

@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.draw_smoke = exports.update_smoke = exports.init_smoke_shader = void 0;
-const vectors_js_1 = require("./vectors.js");
+import { Vector3 } from "./vectors.js";
 var smoke_program;
 var smoke_loc_position;
 var smoke_loc_rotation;
@@ -22,16 +19,16 @@ function check_error(gl) {
 }
 class Smoke_particle {
     constructor() {
-        this.pos = new vectors_js_1.Vector3();
+        this.pos = new Vector3();
         this.rotation = 0; //randomize rotations so it looks less uniform
         this.life = 1000; //life in seconds
         this.using = false;
-        this.rel_pos = new vectors_js_1.Vector3(); //used for depth sorting, to make transparency work
+        this.rel_pos = new Vector3(); //used for depth sorting, to make transparency work
     }
     being_used() { return this.using; }
     reset(pos) {
         let rand_offset = .5;
-        this.pos = pos.get_added(new vectors_js_1.Vector3(Math.random() * rand_offset, Math.random() * rand_offset, Math.random() * rand_offset));
+        this.pos = pos.get_added(new Vector3(Math.random() * rand_offset, Math.random() * rand_offset, Math.random() * rand_offset));
         this.rotation = Math.random() * 2 * Math.PI;
         this.life = 0;
         this.using = true;
@@ -179,29 +176,27 @@ function init_smoke_shader(gl) {
         particle_array.push(new Smoke_particle());
     }
 }
-exports.init_smoke_shader = init_smoke_shader;
 function update_smoke(dt) {
     var p = 0;
     for (var p = 0; p < particle_array.length; p++) {
         particle_array[p].update(dt);
     }
 }
-exports.update_smoke = update_smoke;
 function draw_smoke(gl, dt, fov, resolution, camera_position, camera_orientation, ship) {
     //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     let adding_new = false;
-    let new_particle_pos = new vectors_js_1.Vector3();
+    let new_particle_pos = new Vector3();
     //add and update particles
     if (ship.alive()) {
         let vel = -ship.get_forward_thrust();
         if (Math.random() < dt * 1 * vel) { //eg 300 per second if 300m/s
             adding_new = true;
-            let side = new vectors_js_1.Vector3();
+            let side = new Vector3();
             if (Math.random() < .5) {
-                side = new vectors_js_1.Vector3(-3, 0, 5);
+                side = new Vector3(-3, 0, 5);
             } //left
             else {
-                side = new vectors_js_1.Vector3(3, 0, 5);
+                side = new Vector3(3, 0, 5);
             } //right
             side.set_z(side.get_z() + Math.random() * 8 - 4);
             new_particle_pos = ship.get_position().get_added(ship.get_orientation().get_rotated_vec(side));
@@ -238,4 +233,4 @@ function draw_smoke(gl, dt, fov, resolution, camera_position, camera_orientation
         }
     }
 }
-exports.draw_smoke = draw_smoke;
+export { init_smoke_shader, update_smoke, draw_smoke };

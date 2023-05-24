@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.init_sky_shader = exports.draw_sky = void 0;
 var sky_program;
 var sky_texture;
 var sky_loc_orientation;
@@ -158,7 +155,6 @@ function init_sky_shader(gl) {
     sky_loc_resolution = gl.getUniformLocation(sky_program, "resolution");
     sky_loc_fov = gl.getUniformLocation(sky_program, "fov");
 }
-exports.init_sky_shader = init_sky_shader;
 function draw_sky(gl, fov, resolution, orientation) {
     //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.useProgram(sky_program);
@@ -172,4 +168,4 @@ function draw_sky(gl, fov, resolution, orientation) {
     gl.uniform1i(sky_loc_texture, 0);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
-exports.draw_sky = draw_sky;
+export { draw_sky, init_sky_shader };

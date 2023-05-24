@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.check_model_bullet_collision = exports.check_model_collision = exports.Model = exports.draw_models = exports.init_model_shader = void 0;
-const quaternions_js_1 = require("./quaternions.js");
-const vectors_js_1 = require("./vectors.js");
+import { Quaternion } from "./quaternions.js";
+import { Vector3 } from "./vectors.js";
 var model_program;
 var model_attrib_position;
 var model_attrib_texCoord;
@@ -32,12 +29,12 @@ function loadFile(filePath) {
     return result;
 }
 class Model {
-    constructor(gl, address, y_offset, scale, collision_address = "", dimensions = new vectors_js_1.Vector3()) {
+    constructor(gl, address, y_offset, scale, collision_address = "", dimensions = new Vector3()) {
         this.model_data = new Float32Array([]);
         this.vbo = 0;
         this.has_grid = false;
         this.collision_grid = "";
-        this.dimensions = new vectors_js_1.Vector3();
+        this.dimensions = new Vector3();
         this.max_range = 0;
         //create vertex buffer object:
         this.vbo = gl.createBuffer();
@@ -118,7 +115,6 @@ class Model {
         return false;
     }
 }
-exports.Model = Model;
 function init_model_shader(gl) {
     model_program = gl.createProgram();
     var vertex_shader = gl.createShader(gl.VERTEX_SHADER);
@@ -272,34 +268,33 @@ function init_model_shader(gl) {
     model_attrib_texCoord = gl.getAttribLocation(model_program, "tex_coord");
     model_attrib_normal = gl.getAttribLocation(model_program, "normal");
     obstacle_models = [
-        new Model(gl, "./resources/models/obstacle1.obj", -3.2 / 2, 200, "./resources/models/obstacle1.grid", new vectors_js_1.Vector3(32)),
-        new Model(gl, "./resources/models/obstacle2.obj", -3.2 / 2, 200, "./resources/models/obstacle2.grid", new vectors_js_1.Vector3(32)),
-        new Model(gl, "./resources/models/obstacle3.obj", -5.8 / 2, 200, "./resources/models/obstacle3.grid", new vectors_js_1.Vector3(58)),
-        new Model(gl, "./resources/models/obstacle4.obj", -3.2 / 2, 200, "./resources/models/obstacle4.grid", new vectors_js_1.Vector3(32)),
-        new Model(gl, "./resources/models/obstacle5.obj", -8.2 / 2, 200, "./resources/models/obstacle5.grid", new vectors_js_1.Vector3(82)),
-        new Model(gl, "./resources/models/obstacle6.obj", -1.6 / 2, 200, "./resources/models/obstacle6.grid", new vectors_js_1.Vector3(16)),
-        new Model(gl, "./resources/models/obstacle7.obj", -6.4 / 2, 200, "./resources/models/obstacle7.grid", new vectors_js_1.Vector3(64)),
-        new Model(gl, "./resources/models/obstacle8.obj", -2.8 / 2, 200, "./resources/models/obstacle8.grid", new vectors_js_1.Vector3(28)),
-        new Model(gl, "./resources/models/spawn_player1.obj", -2.2 / 2, 200, "./resources/models/spawn_player1.grid", new vectors_js_1.Vector3(22)),
-        new Model(gl, "./resources/models/spawn_player2.obj", -2.2 / 2, 200, "./resources/models/spawn_player2.grid", new vectors_js_1.Vector3(22)),
+        new Model(gl, "./resources/models/obstacle1.obj", -3.2 / 2, 200, "./resources/models/obstacle1.grid", new Vector3(32)),
+        new Model(gl, "./resources/models/obstacle2.obj", -3.2 / 2, 200, "./resources/models/obstacle2.grid", new Vector3(32)),
+        new Model(gl, "./resources/models/obstacle3.obj", -5.8 / 2, 200, "./resources/models/obstacle3.grid", new Vector3(58)),
+        new Model(gl, "./resources/models/obstacle4.obj", -3.2 / 2, 200, "./resources/models/obstacle4.grid", new Vector3(32)),
+        new Model(gl, "./resources/models/obstacle5.obj", -8.2 / 2, 200, "./resources/models/obstacle5.grid", new Vector3(82)),
+        new Model(gl, "./resources/models/obstacle6.obj", -1.6 / 2, 200, "./resources/models/obstacle6.grid", new Vector3(16)),
+        new Model(gl, "./resources/models/obstacle7.obj", -6.4 / 2, 200, "./resources/models/obstacle7.grid", new Vector3(64)),
+        new Model(gl, "./resources/models/obstacle8.obj", -2.8 / 2, 200, "./resources/models/obstacle8.grid", new Vector3(28)),
+        new Model(gl, "./resources/models/spawn_player1.obj", -2.2 / 2, 200, "./resources/models/spawn_player1.grid", new Vector3(22)),
+        new Model(gl, "./resources/models/spawn_player2.obj", -2.2 / 2, 200, "./resources/models/spawn_player2.grid", new Vector3(22)),
     ];
     obstacle_positions = [
-        [1, new vectors_js_1.Vector3(0, -2000, 0), new quaternions_js_1.Quaternion(.8, 0, .1)],
-        [2, new vectors_js_1.Vector3(1600, -400, -2000), new quaternions_js_1.Quaternion(.5, 0, .2)],
-        [3, new vectors_js_1.Vector3(-1200, 1200, -1200), new quaternions_js_1.Quaternion(.2, 0, .5)],
-        [4, new vectors_js_1.Vector3(-3000, 400, 2400), new quaternions_js_1.Quaternion(0, 0, 1.3)],
-        [5, new vectors_js_1.Vector3(-1800, 200, -1600), new quaternions_js_1.Quaternion(0, 0, -.3)],
-        [6, new vectors_js_1.Vector3(1400, -1200, 800), new quaternions_js_1.Quaternion(.4, 0, .8)],
-        [7, new vectors_js_1.Vector3(-400, -800, 0), new quaternions_js_1.Quaternion(0, 0, 0)],
-        [8, new vectors_js_1.Vector3(-900, 1200, 1200), new quaternions_js_1.Quaternion(.4, 0, 1.8)],
-        [1, new vectors_js_1.Vector3(-900, -500, 1700), new quaternions_js_1.Quaternion(.2, .8, .1)],
-        [6, new vectors_js_1.Vector3(900, 900, 600), new quaternions_js_1.Quaternion(.1, .4, 1.8)],
-        [8, new vectors_js_1.Vector3(1200, 700, -1400), new quaternions_js_1.Quaternion(.1, 0, -.4)],
-        [9, new vectors_js_1.Vector3(0, 0, 3000), new quaternions_js_1.Quaternion()],
-        [10, new vectors_js_1.Vector3(0, 0, -3000), new quaternions_js_1.Quaternion()],
+        [1, new Vector3(0, -2000, 0), new Quaternion(.8, 0, .1)],
+        [2, new Vector3(1600, -400, -2000), new Quaternion(.5, 0, .2)],
+        [3, new Vector3(-1200, 1200, -1200), new Quaternion(.2, 0, .5)],
+        [4, new Vector3(-3000, 400, 2400), new Quaternion(0, 0, 1.3)],
+        [5, new Vector3(-1800, 200, -1600), new Quaternion(0, 0, -.3)],
+        [6, new Vector3(1400, -1200, 800), new Quaternion(.4, 0, .8)],
+        [7, new Vector3(-400, -800, 0), new Quaternion(0, 0, 0)],
+        [8, new Vector3(-900, 1200, 1200), new Quaternion(.4, 0, 1.8)],
+        [1, new Vector3(-900, -500, 1700), new Quaternion(.2, .8, .1)],
+        [6, new Vector3(900, 900, 600), new Quaternion(.1, .4, 1.8)],
+        [8, new Vector3(1200, 700, -1400), new Quaternion(.1, 0, -.4)],
+        [9, new Vector3(0, 0, 3000), new Quaternion()],
+        [10, new Vector3(0, 0, -3000), new Quaternion()],
     ];
 }
-exports.init_model_shader = init_model_shader;
 function check_model_collision(dt, ship) {
     for (let o = 0; o < obstacle_positions.length; o++) {
         let [id, position, orientation] = obstacle_positions[o];
@@ -310,7 +305,7 @@ function check_model_collision(dt, ship) {
                 for (let s = 0; s < samples; s++) {
                     let sample_position = ship.get_position().get_added(ship.get_velocity().get_scaled(-dt * s / samples));
                     for (let p = 0; p < 5; p++) {
-                        let point = sample_position.get_added(ship.get_orientation().get_rotated_vec(new vectors_js_1.Vector3(-5 + 2.5 * p, 0, 0)));
+                        let point = sample_position.get_added(ship.get_orientation().get_rotated_vec(new Vector3(-5 + 2.5 * p, 0, 0)));
                         let rel_point = orientation.get_reverse_rotated_vec(point.get_added(position.neg()));
                         if (obstacle_models[id - 1].check_point_inside(rel_point)) {
                             ship.damage(1, false);
@@ -322,7 +317,6 @@ function check_model_collision(dt, ship) {
         }
     }
 }
-exports.check_model_collision = check_model_collision;
 function check_model_bullet_collision(dt, bullets) {
     for (let b = 0; b < bullets.length; b++) {
         obstacle_loop: for (let o = 0; o < obstacle_positions.length; o++) {
@@ -344,7 +338,6 @@ function check_model_bullet_collision(dt, bullets) {
         }
     }
 }
-exports.check_model_bullet_collision = check_model_bullet_collision;
 function draw_models(gl, fov, resolution, camera_position, camera_orienation, ship1, ship2) {
     //gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     //obstacle_positions[11][2] = new Quaternion(0,new Date().getTime()/1000,new Date().getTime()/1000);
@@ -385,4 +378,4 @@ function draw_models(gl, fov, resolution, camera_position, camera_orienation, sh
         gl.drawArrays(gl.TRIANGLES, 0, obstacle_models[id - 1].get_vertices_count());
     }
 }
-exports.draw_models = draw_models;
+export { init_model_shader, draw_models, Model, check_model_collision, check_model_bullet_collision };

@@ -12,8 +12,8 @@ import { Ship } from './ship.js';
 import { Quaternion } from './quaternions.js';
 import { Vector3 } from './vectors.js';
 
-import { pcPlayer1 } from '../connection/screen.js';
-import { pcPlayer2 } from '../connection/screen.js';
+// import { pcPlayer1 } from '../connection/screen.js';
+// import { pcPlayer2 } from '../connection/screen.js';
 
 const canvas = document.querySelector('#glcanvas') as any;
 canvas.width = window.innerWidth;
@@ -156,39 +156,39 @@ function clamp(min:number, v:number, max:number):number{
 	return Math.max(min, Math.min(v, max));
 }
 
-function receive_data(data_string:string){
-	let pitch_range = 45;
-	let roll_range = 45;
-	//alert(data_string);
-	if (data_string.split(',').length != 7){
-		alert("received bad data")
-	}else if (data_string[0] != "1" && data_string[0] != "2"){
-		alert("unrecognized player")
-	} else {
-		console.log('correct data received');
-		let [player, pitch, roll, yaw_left, yaw_right, slider, shoot] = data_string.split(',')
+// function receive_data(data_string:string){
+// 	let pitch_range = 45;
+// 	let roll_range = 45;
+// 	//alert(data_string);
+// 	if (data_string.split(',').length != 7){
+// 		alert("received bad data")
+// 	}else if (data_string[0] != "1" && data_string[0] != "2"){
+// 		alert("unrecognized player")
+// 	} else {
+// 		console.log('correct data received');
+// 		let [player, pitch, roll, yaw_left, yaw_right, slider, shoot] = data_string.split(',')
 	
-		if (player == '1'){
-			ship1.pitch_speed = clamp(-1, parseFloat(pitch)/pitch_range, 1)*max_pitch; //maybe use a curve to have better control in small movements
-			ship1.roll_speed =  clamp(-1, parseFloat(roll)/roll_range,   1)*max_roll;
-			if (parseInt(yaw_left)) {controller1_pressing_yaw = -1;}
-			else if (parseInt(yaw_right)) {controller1_pressing_yaw = 1;}
-			else {controller1_pressing_yaw = 0;}
-			player1_velocity_target = parseFloat(slider)/100*300
-			controller1_pressing_shoot = parseInt(shoot);
-		}
-		else {
-			ship2.pitch_speed = clamp(-1, parseFloat(pitch)/pitch_range, 1)*max_pitch;
-			ship2.roll_speed =  clamp(-1, parseFloat(roll)/roll_range,   1)*max_roll;
-			if (parseInt(yaw_left)) {controller2_pressing_yaw = -1;}
-			else if (parseInt(yaw_right)) {controller2_pressing_yaw = 1;}
-			else {controller2_pressing_yaw = 0;}
-			player2_velocity_target = parseFloat(slider)/100*300
-			controller2_pressing_shoot = parseInt(shoot);
-		}
-	}
+// 		if (player == '1'){
+// 			ship1.pitch_speed = clamp(-1, parseFloat(pitch)/pitch_range, 1)*max_pitch; //maybe use a curve to have better control in small movements
+// 			ship1.roll_speed =  clamp(-1, parseFloat(roll)/roll_range,   1)*max_roll;
+// 			if (parseInt(yaw_left)) {controller1_pressing_yaw = -1;}
+// 			else if (parseInt(yaw_right)) {controller1_pressing_yaw = 1;}
+// 			else {controller1_pressing_yaw = 0;}
+// 			player1_velocity_target = parseFloat(slider)/100*300
+// 			controller1_pressing_shoot = parseInt(shoot);
+// 		}
+// 		else {
+// 			ship2.pitch_speed = clamp(-1, parseFloat(pitch)/pitch_range, 1)*max_pitch;
+// 			ship2.roll_speed =  clamp(-1, parseFloat(roll)/roll_range,   1)*max_roll;
+// 			if (parseInt(yaw_left)) {controller2_pressing_yaw = -1;}
+// 			else if (parseInt(yaw_right)) {controller2_pressing_yaw = 1;}
+// 			else {controller2_pressing_yaw = 0;}
+// 			player2_velocity_target = parseFloat(slider)/100*300
+// 			controller2_pressing_shoot = parseInt(shoot);
+// 		}
+// 	}
 
-}
+// }
 
 
 function update(dt: number){
@@ -315,29 +315,29 @@ function loop(time: number){
 
 	check_error();
 
-	pcPlayer1.ondatachannel = (event) => {
-		console.log('we received a channel from player 1');
-		const channel1: RTCDataChannel = event.channel;
-		console.log('channel1 is set', channel1);
-		console.log(channel1.readyState);
-		channel1.onmessage = (ev: MessageEvent) => {
-			console.log('we received a message from player1.');
-			console.log(ev.data);
-			receive_data(ev.data);
-		};
-	}
+	// pcPlayer1.ondatachannel = (event) => {
+	// 	console.log('we received a channel from player 1');
+	// 	const channel1: RTCDataChannel = event.channel;
+	// 	console.log('channel1 is set', channel1);
+	// 	console.log(channel1.readyState);
+	// 	channel1.onmessage = (ev: MessageEvent) => {
+	// 		console.log('we received a message from player1.');
+	// 		console.log(ev.data);
+	// 		receive_data(ev.data);
+	// 	};
+	// }
 	
-	pcPlayer2.ondatachannel = (event) => {
-		console.log('we received a channel from player2');
-		const channel2: RTCDataChannel = event.channel;
-		console.log('channel2 is set', channel2);
-		console.log(channel2.readyState);
-		channel2.onmessage = (ev: MessageEvent) => {
-			console.log('we received a message from player2.');
-			console.log(ev.data);
-			receive_data(ev.data);
-		};
-	}
+	// pcPlayer2.ondatachannel = (event) => {
+	// 	console.log('we received a channel from player2');
+	// 	const channel2: RTCDataChannel = event.channel;
+	// 	console.log('channel2 is set', channel2);
+	// 	console.log(channel2.readyState);
+	// 	channel2.onmessage = (ev: MessageEvent) => {
+	// 		console.log('we received a message from player2.');
+	// 		console.log(ev.data);
+	// 		receive_data(ev.data);
+	// 	};
+	// }
 	
 }
 

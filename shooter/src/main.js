@@ -11,6 +11,10 @@ import { Quaternion } from './quaternions.js';
 import { Vector3 } from './vectors.js';
 // import { pcPlayer1 } from '../connection/screen.js';
 // import { pcPlayer2 } from '../connection/screen.js';
+// JavaScript
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    document.body.style.overflow = 'hidden';
+}
 const canvas = document.querySelector('#glcanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

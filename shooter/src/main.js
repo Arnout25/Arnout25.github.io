@@ -12,10 +12,6 @@ import { Vector3 } from './vectors.js';
 // import { pcPlayer1 } from '../connection/screen.js';
 // import { pcPlayer2 } from '../connection/screen.js';
 // JavaScript
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    document.body.style.overflow = 'hidden';
-}
-// JavaScript
 document.addEventListener('touchmove', function (e) {
     e.preventDefault();
 }, { passive: false });
@@ -196,6 +192,10 @@ function update(dt) {
     else {
         roll_speed = (Math.abs(roll_speed) < roll_acc * dt) ? 0 : roll_speed - Math.sign(roll_speed) * roll_acc * dt;
     }
+    if (device_orient) {
+        pitch_speed = orient_pitch;
+        roll_speed = orient_roll;
+    }
     if (input_dict['Space']) {
         player1_velocity_target = Math.min(player1_velocity_target + 100 * dt, 300);
     }
@@ -316,9 +316,26 @@ function resize(event) {
     canvas.height = window.innerHeight;
 }
 window.addEventListener("resize", resize);
+let device_orient = false;
+let orient_pitch = 0;
+let orient_roll = 0;
+function handleDeviceOrientation(event) {
+    const { alpha, beta, gamma } = event;
+    if (typeof beta == 'number') {
+        orient_pitch = beta;
+        device_orient = true;
+    }
+    if (typeof alpha == 'number') {
+        orient_roll = alpha;
+        device_orient = true;
+    }
+    console.log('tt', alpha);
+}
+window.addEventListener('deviceorientation', handleDeviceOrientation);
 check_error();
 loop(0);
 document.addEventListener('keydown', (event) => {
+    device_orient = false;
     if (event.code in input_dict) {
         input_dict[event.code] = true;
     }

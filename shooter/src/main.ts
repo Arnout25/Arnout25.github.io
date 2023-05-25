@@ -16,15 +16,10 @@ import { Vector3 } from './vectors.js';
 // import { pcPlayer2 } from '../connection/screen.js';
 
 // JavaScript
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-	document.body.style.overflow = 'hidden';
-}
-
-// JavaScript
 document.addEventListener('touchmove', function (e) {
 	e.preventDefault();
   }, { passive: false });
-  
+
 
 const canvas = document.querySelector('#glcanvas') as any;
 canvas.width = window.innerWidth;
@@ -216,6 +211,7 @@ function update(dt: number){
 	else if (input_dict['KeyW']){pitch_speed = Math.max(-max_pitch,  pitch_speed - pitch_acc*dt);}
 	else {pitch_speed = (Math.abs(pitch_speed) < pitch_acc*dt)? 0: pitch_speed - Math.sign(pitch_speed)*pitch_acc*dt}
 
+
 	//yaw, also used by controller
 	if      (input_dict['KeyE'] || controller1_pressing_yaw ==  1){yaw_speed = Math.min(yaw_speed + yaw_acc*dt,  max_yaw);}
 	else if (input_dict['KeyQ'] || controller1_pressing_yaw == -1){yaw_speed = Math.max(-max_yaw,  yaw_speed - yaw_acc*dt);}
@@ -226,6 +222,11 @@ function update(dt: number){
 	else if (input_dict['KeyD']){roll_speed = Math.max(-max_roll,  roll_speed - roll_acc*dt);}
 	else {roll_speed = (Math.abs(roll_speed) < roll_acc*dt)? 0: roll_speed - Math.sign(roll_speed)*roll_acc*dt}
 	
+	if (device_orient){
+		pitch_speed = orient_pitch;
+		roll_speed = orient_roll;
+	}
+
 	if      (input_dict['Space']){player1_velocity_target = Math.min(player1_velocity_target+100*dt, 300);}
 	else if (input_dict['ShiftLeft']){player1_velocity_target = Math.max(0, player1_velocity_target-100*dt);}
 
@@ -361,11 +362,30 @@ function resize(event: UIEvent) {
 
 window.addEventListener("resize", resize);
 
+let device_orient = false;
+let orient_pitch: number = 0;
+let orient_roll: number = 0;
+function handleDeviceOrientation(event: DeviceOrientationEvent): void {
+	const { alpha, beta, gamma } = event;
+	if (typeof beta == 'number'){
+		orient_pitch = beta;
+		device_orient = true;
+	}
+	if (typeof alpha == 'number'){
+		orient_roll = alpha;
+		device_orient = true;
+	}
+	console.log('tt', alpha)
+}
+
+window.addEventListener('deviceorientation', handleDeviceOrientation);
+
 check_error();
 loop(0);
 
 
 document.addEventListener('keydown', (event) => {
+	device_orient = false;
 	if (event.code in input_dict){
 		input_dict[event.code] = true;
 	}

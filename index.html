@@ -5,13 +5,15 @@
 </head>
 <body>
   
-  <!-- Button -->
-  <button onclick="window.location.href = 'shooter/index.html';">Space Shooter</button>
 
   
   <body style="background-color:black;">
-    <canvas id="glcanvas" width="100%" height="100%" style="position: absolute; top: 0px; left: 0px;"></canvas>
+    <canvas id="glcanvas" width="100%" height="100%" style="position: absolute; top: 0px; left: 0px; z-index: -1;"></canvas>
   </body>
+
+  
+  <!-- Button -->
+  <button onclick="window.location.href = 'shooter/index.html'; " style="position: relative; z-index: 1;">Space Shooter</button>
 
 </body>
 </html>

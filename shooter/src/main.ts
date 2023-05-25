@@ -20,6 +20,12 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 	document.body.style.overflow = 'hidden';
 }
 
+// JavaScript
+document.addEventListener('touchmove', function (e) {
+	e.preventDefault();
+  }, { passive: false });
+  
+
 const canvas = document.querySelector('#glcanvas') as any;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

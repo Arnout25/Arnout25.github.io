@@ -102,7 +102,7 @@ const colorAttributeLocation = gl.getAttribLocation(program, 'color');
 gl.enableVertexAttribArray(colorAttributeLocation);
 gl.vertexAttribPointer(colorAttributeLocation, 3, gl.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
 check_error();
-init_cell_shader(gl);
+init_cell_shader(gl, canvas.width / canvas.height);
 // var instances:number[] = [];
 var automaton_running = false;
 var startTime = 0;
@@ -141,8 +141,8 @@ function loop(time) {
     // //player 2
     // camera2.draw(gl, delta_time, fov, [gl.canvas.width/2,0,gl.canvas.width/2, gl.canvas.height]);
     // gl.drawArrays(gl.TRIANGLES, 0, 3);
-    let tiltX = (smoothX / canvas.width - 0.5) * .2;
-    let tiltY = (smoothY / canvas.height - 0.5) * .2;
+    let tiltX = (smoothX / canvas.width - 0.5) * .3;
+    let tiltY = (smoothY / canvas.height - 0.5) * .3;
     draw_cell_shader(gl, automaton_running, aspect_ratio, time, tiltX, tiltY);
     // console.log(mouseX, mouseY);
     check_error();

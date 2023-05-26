@@ -125,7 +125,7 @@ gl.vertexAttribPointer(colorAttributeLocation, 3, gl.FLOAT, false, 6 * Float32Ar
 
 check_error()
 
-init_cell_shader(gl);
+init_cell_shader(gl, canvas.width/canvas.height);
 
 // var instances:number[] = [];
 
@@ -142,7 +142,7 @@ function loop(time: number){
 
 	window.requestAnimationFrame(loop);
 
-	var aspect_ratio = canvas.width/canvas.height
+	var aspect_ratio = canvas.width/canvas.height;
 	
 	gl.viewport(0, 0, canvas.width, canvas.height);
 
@@ -183,8 +183,8 @@ function loop(time: number){
 
 	// gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-	let tiltX = (smoothX/canvas.width  - 0.5)*.2;
-	let tiltY = (smoothY/canvas.height - 0.5)*.2;
+	let tiltX = (smoothX/canvas.width  - 0.5)*.3;
+	let tiltY = (smoothY/canvas.height - 0.5)*.3;
 
 	draw_cell_shader(gl, automaton_running, aspect_ratio, time, tiltX, tiltY);
 

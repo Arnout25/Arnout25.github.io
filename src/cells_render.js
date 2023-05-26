@@ -8,7 +8,8 @@ var cell_positions = [];
 var startAnimationLoc;
 var notifyAnimationLoc;
 let grid = new Set();
-function init_cell_shader(gl) {
+var depth = 60;
+function init_cell_shader(gl, aspect_ratio) {
     cell_program = gl.createProgram();
     var vertex_shader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertex_shader, `#version 300 es
@@ -210,8 +211,14 @@ function init_cell_shader(gl) {
         // grid.add(JSON.stringify([0,1]))
         update_cells();
     };
-    title_image.src = "./resources/Title_single2.png";
-    "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png"; //"./sky.png";
+    if (aspect_ratio > 1) {
+        title_image.src = "./resources/Title_single2.png";
+        "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png"; //"./sky.png";
+    }
+    else {
+        title_image.src = "./resources/Title_double2.png";
+        depth = Math.floor(50 / aspect_ratio);
+    }
 }
 function update_cells() {
     cell_positions = [];
@@ -273,18 +280,22 @@ function update_grid() {
     update_cells();
 }
 var last_update_time = 0;
+var step_length = .6;
 function draw_cell_shader(gl, running, aspect_ratio, time, tiltX, tiltY) {
     if (running) {
-        if (0.1 < (time - last_update_time) * .001) {
+        if (step_length < (time - last_update_time) * .001) {
             update_grid();
             last_update_time = time;
+            if (step_length > .05) {
+                step_length -= .05 * step_length;
+            }
         }
     }
     gl.useProgram(cell_program);
     const w = gl.canvas.clientWidth;
     const h = gl.canvas.clientHeight;
     // gl.uniformMatrix4fv(transformationLoc, false, m4.translation(Math.cos(time*0.001), Math.sin(time*0.001), 0));
-    let transformation = m4.translate(m4.projection(90, aspect_ratio, 0.1, 100), Math.cos(time * 0.001) * 2, Math.sin(time * 0.001 * 2), -60);
+    let transformation = m4.translate(m4.projection(90, aspect_ratio, 0.1, 200), Math.cos(time * 0.001) * 2, Math.sin(time * 0.001 * 2), -depth);
     transformation = m4.yRotate(transformation, tiltX);
     transformation = m4.xRotate(transformation, tiltY);
     gl.uniformMatrix4fv(transformationLoc, false, transformation);

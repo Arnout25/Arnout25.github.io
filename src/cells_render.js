@@ -286,7 +286,7 @@ function draw_cell_shader(gl, running, aspect_ratio, time, tiltX, tiltY) {
         if (step_length < (time - last_update_time) * .001) {
             update_grid();
             last_update_time = time;
-            if (step_length > .05) {
+            if (step_length > .03) {
                 step_length -= .05 * step_length;
             }
         }
@@ -295,7 +295,7 @@ function draw_cell_shader(gl, running, aspect_ratio, time, tiltX, tiltY) {
     const w = gl.canvas.clientWidth;
     const h = gl.canvas.clientHeight;
     // gl.uniformMatrix4fv(transformationLoc, false, m4.translation(Math.cos(time*0.001), Math.sin(time*0.001), 0));
-    let transformation = m4.translate(m4.projection(90, aspect_ratio, 0.1, 200), Math.cos(time * 0.001) * 2, Math.sin(time * 0.001 * 2), -depth);
+    let transformation = m4.translate(m4.projection(90, aspect_ratio, 0.1, 200), Math.cos(time * 0.001 * .6) * 2, Math.sin(time * 0.001 * .6 * 2), -depth);
     transformation = m4.yRotate(transformation, tiltX);
     transformation = m4.xRotate(transformation, tiltY);
     gl.uniformMatrix4fv(transformationLoc, false, transformation);

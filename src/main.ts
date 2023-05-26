@@ -199,8 +199,12 @@ function resize(event: UIEvent) {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 }
-
+function orientationchange(event: Event) {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+}
 window.addEventListener("resize", resize);
+window.addEventListener("orientationchange", orientationchange);
 
 var smoothX: number = canvas.width/2;
 var smoothY: number = canvas.height/2;

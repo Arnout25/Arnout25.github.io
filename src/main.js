@@ -151,7 +151,12 @@ function resize(event) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
+function orientationchange(event) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 window.addEventListener("resize", resize);
+window.addEventListener("orientationchange", orientationchange);
 var smoothX = canvas.width / 2;
 var smoothY = canvas.height / 2;
 function updateMouse(event) {

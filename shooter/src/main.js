@@ -322,14 +322,13 @@ let orient_roll = 0;
 function handleDeviceOrientation(event) {
     const { alpha, beta, gamma } = event;
     if (typeof beta == 'number') {
-        orient_pitch = beta;
+        orient_pitch = beta / 180 * Math.PI * 2;
         device_orient = true;
     }
     if (typeof alpha == 'number') {
-        orient_roll = alpha;
+        orient_roll = alpha / 180 * Math.PI * 2;
         device_orient = true;
     }
-    console.log('tt', alpha);
 }
 window.addEventListener('deviceorientation', handleDeviceOrientation);
 check_error();

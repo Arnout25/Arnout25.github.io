@@ -128,7 +128,7 @@ function loop(time) {
     // 	instances = instances.concat([instances.length/3 - 10, instances.length/3%2, 0]);
     // 	// console.log(instances);
     // }
-    gl.clearColor(0.1, 0.08, 0.15, 1.0);
+    gl.clearColor(27 / 255, 24 / 255, 37 / 255, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.useProgram(program);
     gl.bindVertexArray(vao);
@@ -164,9 +164,11 @@ function smoothstep(edge0, edge1, x) {
     // Apply the smoothstep interpolation formula
     return t * t * (3 - 2 * t);
 }
+var isScrollingByCode = false;
 function smoothScrollTo(scrollPosition) {
+    isScrollingByCode = true;
     const startTime = performance.now();
-    const duration = 700; // Adjust the duration as desired
+    const duration = 600; // Adjust the duration as desired
     const startPosition = window.pageYOffset;
     function scroll(timestamp) {
         const elapsed = smoothstep(0, 1, (timestamp - startTime) / duration) * duration;
@@ -176,8 +178,20 @@ function smoothScrollTo(scrollPosition) {
         if (progress < 1) {
             window.requestAnimationFrame(scroll);
         }
+        else {
+            isScrollingByCode = false;
+        }
     }
     window.requestAnimationFrame(scroll);
+}
+var scrollDisabled = false;
+function disableScroll(duration) {
+    scrollDisabled = true;
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+        scrollDisabled = false;
+        document.body.style.overflow = '';
+    }, duration);
 }
 window.addEventListener('wheel', (event) => {
     setTimeout(() => {
@@ -186,54 +200,20 @@ window.addEventListener('wheel', (event) => {
         if (!(content == null)) {
             const rect = content.getBoundingClientRect();
             const contentPos = rect.top + window.pageYOffset;
-            if (window.scrollY < contentPos) {
+            if (window.scrollY < contentPos && !isScrollingByCode) {
+                //scrollIndex += 1;
                 if (event.deltaY > 0) {
-                    //event.preventDefault(); // Prevent default scroll behavior
-                    // event.preventDefault();
-                    // content.scrollIntoView({ behavior: 'smooth' });
+                    disableScroll(600);
                     smoothScrollTo(contentPos);
                 }
-                else if (event.deltaY < 0) {
-                    //event.preventDefault();
+                else {
+                    disableScroll(600);
                     smoothScrollTo(0);
                 }
             }
         }
     }, 100);
 });
-// var isScrollingByCode = false;
-// document.addEventListener("scroll", () => {
-// 	if (isScrollingByCode) {
-// 		isScrollingByCode = false;
-// 		return;
-// 	}
-// 	console.log(window.scrollY)
-// 	const content = document.getElementById("content");
-// 	if (!(content == null)){
-// 		const scrollPosition = window.scrollY;
-// 		const snapPosition1 = 0;//canvas.clientY;
-// 		const rect = content.getBoundingClientRect();
-// 		const snapPosition2 = rect.top + window.pageYOffset;
-// 		//const snapPosition2 = content.client;
-// 		const distance1 = Math.abs(scrollPosition - snapPosition1);
-// 		const distance2 = Math.abs(scrollPosition - snapPosition2);
-// 		console.log("d1", snapPosition1)
-// 		console.log("d2", snapPosition2)
-// 		if (distance1 < distance2) {
-// 			isScrollingByCode = true;
-// 			window.scrollTo({
-// 				top: snapPosition1,
-// 				behavior: "smooth",
-// 		});
-// 		} else {
-// 			isScrollingByCode = true;
-// 			window.scrollTo({
-// 				top: snapPosition2,
-// 				behavior: "smooth",
-// 		});
-// 		}
-// 	}
-// });
 function resize(event) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

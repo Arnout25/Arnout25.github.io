@@ -3,13 +3,24 @@
 
   <head>
     <title>Menu</title>
+    <link rel="stylesheet" href="./main.css" type="text/css">
   </head>
 
     
-  <body style="background-color:black;">
-    <canvas id="glcanvas" width="100%" height="100%" style="position: absolute; top: 0px; left: 0px; z-index: -1;"></canvas>
-    <!-- Button -->
-    <button onclick="window.location.href = 'shooter'; " style="position: relative; z-index: 1;">Space Shooter</button>
+  <body>  <!-- style="background-color:yellow;"> -->
+
+    <div class="canvas-container">
+      <canvas id="glcanvas" class = "canvas-object"></canvas>
+      <!-- Button -->
+      <button onclick="window.location.href = 'shooter'; ">Space Shooter</button>
+      <img src="./resources/downArrow.png"id="downArrow" class="down-arrow">
+    </div>
+
+    <div class="content">
+      <!-- Rest of your website content here -->
+      <title>Other stuff</title>
+    </div>
+
   </body>
 
   <script type="module" src="src/main.js"></script>

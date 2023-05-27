@@ -3,7 +3,8 @@ const canvas = document.querySelector('#glcanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 // Initialize the GL context
-const gl = canvas.getContext('webgl2');
+const gl = canvas.getContext('webgl2', { antialias: true });
+gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 function check_error() {
     var err = gl.getError();
     if (err != gl.NO_ERROR) {
@@ -127,7 +128,7 @@ function loop(time) {
     // 	instances = instances.concat([instances.length/3 - 10, instances.length/3%2, 0]);
     // 	// console.log(instances);
     // }
-    gl.clearColor(0.2, 0.2, 0.4, 1.0);
+    gl.clearColor(0.1, 0.08, 0.15, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.useProgram(program);
     gl.bindVertexArray(vao);
@@ -144,6 +145,18 @@ function loop(time) {
     draw_cell_shader(gl, automaton_running, aspect_ratio, time, tiltX, tiltY);
     // console.log(mouseX, mouseY);
     check_error();
+}
+function handleClick() {
+    console.log("Image clicked!");
+    window.scrollTo({
+        left: 0,
+        top: canvas.height,
+        behavior: "smooth"
+    });
+}
+const myImage = document.getElementById("downArrow");
+if (!(myImage == null)) {
+    myImage.addEventListener("click", handleClick);
 }
 function resize(event) {
     canvas.width = window.innerWidth;
@@ -190,7 +203,9 @@ if (iOS) {
 console.log('sss');
 var clicked = false;
 function updateClick(event) {
-    clicked = true;
+    if (canvas.height * 0.25 < event.clientY && event.clientY < canvas.height * .75) {
+        clicked = true;
+    }
 }
 ;
 window.addEventListener('mousedown', updateClick);

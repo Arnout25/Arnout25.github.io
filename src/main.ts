@@ -6,7 +6,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // Initialize the GL context
-const gl = canvas.getContext('webgl2');
+const gl = canvas.getContext('webgl2', { antialias: true });
+gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
 
 function check_error(){
 	var err = gl.getError();
@@ -162,7 +163,7 @@ function loop(time: number){
 	// }
 
 
-	gl.clearColor(0.2, 0.2, 0.4, 1.0);
+	gl.clearColor(0.1, 0.08, 0.15, 1.0);
 	gl.clear(gl.COLOR_BUFFER_BIT);
 
 	gl.useProgram(program);
@@ -189,6 +190,21 @@ function loop(time: number){
 	// console.log(mouseX, mouseY);
 
 	check_error();
+}
+
+function handleClick() {
+	console.log("Image clicked!");
+
+	window.scrollTo({
+	  left: 0,
+	  top: canvas.height,
+	  behavior: "smooth"
+	});
+}
+  
+const myImage = document.getElementById("downArrow");
+if (!(myImage == null)){
+	myImage.addEventListener("click", handleClick);
 }
 
 
@@ -249,7 +265,10 @@ console.log('sss')
 
 var clicked = false;
 function updateClick(event: MouseEvent) {
-	clicked = true;
+
+	if (canvas.height*0.25 < event.clientY && event.clientY < canvas.height*.75){
+		clicked = true;
+	}
 };
 window.addEventListener('mousedown', updateClick);
 

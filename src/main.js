@@ -187,6 +187,7 @@ if (iOS) {
         }
     });
 }
+console.log('ttt');
 var clicked = false;
 function updateClick(event) {
     clicked = true;

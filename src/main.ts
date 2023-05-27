@@ -234,16 +234,18 @@ interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
 	requestPermission?: () => Promise<'granted' | 'denied'>;
   }
   
-  const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
-  const iOS = typeof requestPermission === 'function';
-  if (iOS) {
+const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
+const iOS = typeof requestPermission === 'function';
+if (iOS) {
 	console.log('ios')
 	requestPermission().then(response => {
-        if (response == 'granted') {
+		if (response == 'granted') {
 			console.log('granted!')
 		}
 	})
-  }
+}
+
+console.log('ttt')
 
 var clicked = false;
 function updateClick(event: MouseEvent) {

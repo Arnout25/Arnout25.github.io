@@ -168,11 +168,11 @@ window.addEventListener('mousemove', updateMouse);
 function handleDeviceOrientation(event) {
     const { alpha, beta, gamma } = event;
     if (typeof beta == 'number') {
-        let new_tiltY = beta * .3;
+        let new_tiltY = beta / 360 * Math.PI * .3;
         tiltY = .9 * tiltY + .1 * new_tiltY;
     }
-    if (typeof alpha == 'number') {
-        let new_tiltX = alpha * .3;
+    if (typeof gamma == 'number') {
+        let new_tiltX = gamma / 360 * Math.PI * .3;
         tiltX = .9 * tiltX + .1 * new_tiltX;
     }
 }

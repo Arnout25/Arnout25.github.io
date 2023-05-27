@@ -219,7 +219,7 @@ window.addEventListener('mousemove', updateMouse);
 function handleDeviceOrientation(event: DeviceOrientationEvent): void {
 	const { alpha, beta, gamma } = event;
 	if (typeof beta == 'number'){
-		let new_tiltY = beta/360*Math.PI * 1;
+		let new_tiltY = (beta-30)/360*Math.PI * 1;
 		tiltY = .9*tiltY + .1*new_tiltY;
 	}
 	if (typeof gamma == 'number'){
@@ -245,7 +245,7 @@ if (iOS) {
 	})
 }
 
-console.log('ttt')
+console.log('sss')
 
 var clicked = false;
 function updateClick(event: MouseEvent) {

@@ -219,11 +219,11 @@ window.addEventListener('mousemove', updateMouse);
 function handleDeviceOrientation(event: DeviceOrientationEvent): void {
 	const { alpha, beta, gamma } = event;
 	if (typeof beta == 'number'){
-		let new_tiltY = beta/360*Math.PI*.3;
+		let new_tiltY = beta/360*Math.PI * 1;
 		tiltY = .9*tiltY + .1*new_tiltY;
 	}
 	if (typeof gamma == 'number'){
-		let new_tiltX = gamma/360*Math.PI*.3;
+		let new_tiltX = gamma/360*Math.PI * 1;
 		tiltX = .9*tiltX + .1*new_tiltX;
 	}
 }

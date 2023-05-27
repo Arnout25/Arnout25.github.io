@@ -158,6 +158,82 @@ const myImage = document.getElementById("downArrow");
 if (!(myImage == null)) {
     myImage.addEventListener("click", handleClick);
 }
+function smoothstep(edge0, edge1, x) {
+    // Ensure the input value is within the specified range
+    const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+    // Apply the smoothstep interpolation formula
+    return t * t * (3 - 2 * t);
+}
+function smoothScrollTo(scrollPosition) {
+    const startTime = performance.now();
+    const duration = 700; // Adjust the duration as desired
+    const startPosition = window.pageYOffset;
+    function scroll(timestamp) {
+        const elapsed = smoothstep(0, 1, (timestamp - startTime) / duration) * duration;
+        const progress = Math.min(elapsed / duration, 1);
+        const targetPosition = startPosition + (scrollPosition - startPosition) * progress;
+        window.scrollTo({ left: 0, top: targetPosition });
+        if (progress < 1) {
+            window.requestAnimationFrame(scroll);
+        }
+    }
+    window.requestAnimationFrame(scroll);
+}
+window.addEventListener('wheel', (event) => {
+    setTimeout(() => {
+        const content = document.getElementById("content");
+        //console.log(content?.)
+        if (!(content == null)) {
+            const rect = content.getBoundingClientRect();
+            const contentPos = rect.top + window.pageYOffset;
+            if (window.scrollY < contentPos) {
+                if (event.deltaY > 0) {
+                    //event.preventDefault(); // Prevent default scroll behavior
+                    // event.preventDefault();
+                    // content.scrollIntoView({ behavior: 'smooth' });
+                    smoothScrollTo(contentPos);
+                }
+                else if (event.deltaY < 0) {
+                    //event.preventDefault();
+                    smoothScrollTo(0);
+                }
+            }
+        }
+    }, 100);
+});
+// var isScrollingByCode = false;
+// document.addEventListener("scroll", () => {
+// 	if (isScrollingByCode) {
+// 		isScrollingByCode = false;
+// 		return;
+// 	}
+// 	console.log(window.scrollY)
+// 	const content = document.getElementById("content");
+// 	if (!(content == null)){
+// 		const scrollPosition = window.scrollY;
+// 		const snapPosition1 = 0;//canvas.clientY;
+// 		const rect = content.getBoundingClientRect();
+// 		const snapPosition2 = rect.top + window.pageYOffset;
+// 		//const snapPosition2 = content.client;
+// 		const distance1 = Math.abs(scrollPosition - snapPosition1);
+// 		const distance2 = Math.abs(scrollPosition - snapPosition2);
+// 		console.log("d1", snapPosition1)
+// 		console.log("d2", snapPosition2)
+// 		if (distance1 < distance2) {
+// 			isScrollingByCode = true;
+// 			window.scrollTo({
+// 				top: snapPosition1,
+// 				behavior: "smooth",
+// 		});
+// 		} else {
+// 			isScrollingByCode = true;
+// 			window.scrollTo({
+// 				top: snapPosition2,
+// 				behavior: "smooth",
+// 		});
+// 		}
+// 	}
+// });
 function resize(event) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

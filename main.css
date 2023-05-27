@@ -20,6 +20,7 @@ body::-webkit-scrollbar-thumb {
 	background-color: transparent;
 }
 
+
 .canvas-container {
 	position: absolute;
 	top: 0;
@@ -58,6 +59,50 @@ body::-webkit-scrollbar-thumb {
 }
 
 .content {
-	margin-top: 100%; /* Adjust this value to leave space for the canvas */
-	z-index: 2; /* Ensure the content appears above the canvas */
+	margin-top: 100vh; /* Adjust this value to leave space for the canvas */
+	z-index: 3; /* Ensure the content appears above the canvas */
+	height: 200vh;
+	/*background-color: red;*/
 }
+
+
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center horizontally */
+	justify-content: flex-start;
+	padding-top: 20px;
+	height: 100vh;
+	/*background-color: yellow;*/
+  }
+  
+  .box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	margin-bottom: 20px;
+	background-color: #f2f2f2;
+	text-align: center;
+	width: 400px;
+	
+  }
+  
+@media (max-width: 767px) {
+  
+	.box {
+		box-sizing: border-box;
+		width: calc(100% - 40px);
+		padding: 20px;
+	}
+  }
+  
+  .box img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	border-radius: 50%;
+	margin-bottom: 10px;
+  }
+

@@ -141,8 +141,6 @@ function loop(time) {
     // //player 2
     // camera2.draw(gl, delta_time, fov, [gl.canvas.width/2,0,gl.canvas.width/2, gl.canvas.height]);
     // gl.drawArrays(gl.TRIANGLES, 0, 3);
-    let tiltX = (smoothX / canvas.width - 0.5) * .3;
-    let tiltY = (smoothY / canvas.height - 0.5) * .3;
     draw_cell_shader(gl, automaton_running, aspect_ratio, time, tiltX, tiltY);
     // console.log(mouseX, mouseY);
     check_error();
@@ -157,14 +155,38 @@ function orientationchange(event) {
 }
 window.addEventListener("resize", resize);
 window.addEventListener("orientationchange", orientationchange);
-var smoothX = canvas.width / 2;
-var smoothY = canvas.height / 2;
+var tiltX = 0;
+var tiltY = 0;
 function updateMouse(event) {
-    smoothX = smoothX * .9 + event.clientX * .1;
-    smoothY = smoothY * .9 + event.clientY * .1;
+    let new_tiltX = (event.clientX / canvas.width - 0.5) * .3;
+    let new_tiltY = (event.clientY / canvas.height - 0.5) * .3;
+    tiltX = .9 * tiltX + .1 * new_tiltX;
+    tiltY = .9 * tiltY + .1 * new_tiltY;
 }
 ;
 window.addEventListener('mousemove', updateMouse);
+function handleDeviceOrientation(event) {
+    const { alpha, beta, gamma } = event;
+    if (typeof beta == 'number') {
+        let new_tiltY = beta * .3;
+        tiltY = .9 * tiltY + .1 * new_tiltY;
+    }
+    if (typeof alpha == 'number') {
+        let new_tiltX = alpha * .3;
+        tiltX = .9 * tiltX + .1 * new_tiltX;
+    }
+}
+window.addEventListener('deviceorientation', handleDeviceOrientation);
+const requestPermission = DeviceOrientationEvent.requestPermission;
+const iOS = typeof requestPermission === 'function';
+if (iOS) {
+    console.log('ios');
+    requestPermission().then(response => {
+        if (response == 'granted') {
+            console.log('granted!');
+        }
+    });
+}
 var clicked = false;
 function updateClick(event) {
     clicked = true;

@@ -240,7 +240,6 @@ let nbs = [
 function update_grid() {
     let new_grid = new Set();
     let checking = new Set();
-    console.log(grid.size);
     grid.forEach((c) => {
         checking.add(c);
         const p = JSON.parse(c);
@@ -248,12 +247,6 @@ function update_grid() {
             checking.add(JSON.stringify([p[0] + nbs[i * 2], p[1] + nbs[i * 2 + 1]]));
         }
     });
-    // console.log(0.5, grid.size)
-    // console.log(0.5, grid.has([0,0]));
-    // checking.forEach((tuple) => {
-    //  	console.log(1, tuple[0], tuple[1]);
-    // });
-    console.log(1, checking.size);
     checking.forEach((c) => {
         const p = JSON.parse(c);
         let count = 0;
@@ -275,8 +268,6 @@ function update_grid() {
         }
     });
     grid = new_grid;
-    console.log(2, new_grid.size);
-    console.log(2, grid.size);
     update_cells();
 }
 var last_update_time = 0;

@@ -277,7 +277,9 @@ window.addEventListener('wheel', (event) => {
 			}
 		}
 	}, 100)
-  });
+});
+
+
 
 
 function resize(event: UIEvent) {

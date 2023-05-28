@@ -8,6 +8,9 @@
 
     
   <body>  <!-- style="background-color:yellow;"> -->
+    
+    <script type = "module" src = "src/main.js"></script> 
+    <script src = "src/html_functions.js"></script>
 
     <div class="canvas-container">
       <canvas id="glcanvas" class = "canvas-object"></canvas>
@@ -20,17 +23,19 @@
       
       <div class="container">
         <!-- <div style="height: 200px;"></div> -->
-        <div class="box">
+        <div class="box" onmousemove="tiltImage(event)">
           <h2>Graphics Programming</h2>
-          <img src="path/to/image1.jpg" alt="Image 1">
+          <div class="image-wrapper">
+            <img src="./resources/Title_single2.png" style = "position: absolute; display: block;"alt="Image 1">
+          </div>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
-        <div class="box">
+        <div class="box" onmousemove="tiltImage(event)">
           <h2>3D Design</h2>
           <img src="path/to/image2.jpg" alt="Image 2">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
-        <div class="box">
+        <div class="box" onmousemove="tiltImage(event)">
           <h2>Origami</h2>
           <img src="path/to/image3.jpg" alt="Image 3">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -42,6 +47,5 @@
 
   </body>
 
-  <script type="module" src="src/main.js"></script>
 
 </html>

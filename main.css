@@ -72,44 +72,64 @@ body::-webkit-scrollbar-thumb {
 	flex-direction: column;
 	align-items: center; /* Center horizontally */
 	justify-content: flex-start;
-	padding-top: 100px;
+	padding-top: 60px;
 	height: 100vh;
 	/*background-color: yellow;*/
 }
   
 .box {
 	display: flex;
-	flex-direction: column;
-	align-items: left;
+
+	place-items: center;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+
 	padding: 20px;
 	margin-bottom: 20px;
-	background-color: #f2f2f2;
-	text-align: left;
+	background-color: black;
 	width: 60vw;
+	height: 30vh;
+	
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 	
 }
 
-.image-wrapper {
-	width: 100%;
-	height: 100%;
-	position: relative;
+
+.box h2 {
+  	font-size: clamp(10px, 10vw, 64px);
+	color: white; /* Set the font color */
+	font-family: Arial, sans-serif; /* Set the font family */
+	position: absolute; /* Position the text element within the parent */
+	/* top: 35%; Move the text element 50% down from the top of the parent */
+	/* left: 50%; Move the text element 50% from the left of the parent */
+	/* transform: translate(-50%, -50%); */
+	/* width: fit-content; */
+	
+	white-space: nowrap; /* Force single line */
+	overflow: hidden; /* Hide overflowing text */
+	text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+	z-index: 10;
+  }
+
+
+#graphics {
+	background-image: url("./resources/banner1.png");
 }
   
-.image-wrapper img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-  
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   
 	.box {
 		box-sizing: border-box;
 		width: calc(100% - 40px);
 		padding: 20px;
 	}
+
+	/* .box h2 {
+		transform: translate(-50%, -50%) scale(1.5);
+	  } */
   }
   
   .box img {

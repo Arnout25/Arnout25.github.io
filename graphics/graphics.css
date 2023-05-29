@@ -1,0 +1,59 @@
+body {
+	place-items: center;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+
+	background-color: rgb(27,24,37);
+}
+
+.banner {
+	position: absolute;
+	display: flex;
+
+	place-items: center;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin-bottom: 20px;
+	background-color: black;
+	width: 100vw;
+	height: 30vh;
+	
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	
+	background-image: url("./../resources/banner1.png");
+}
+
+
+.banner h2 {
+	font-size: clamp(10px, 10vw, 64px);
+	color: white; /* Set the font color */
+	font-family: Arial, sans-serif; /* Set the font family */
+	position: absolute; /* Position the text element within the parent */
+
+	white-space: nowrap; /* Force single line */
+	overflow: hidden; /* Hide overflowing text */
+	text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+	z-index: 10;
+}
+
+
+.content {
+	margin-top: 40vh; /* Adjust this value to leave space for the canvas */
+	z-index: 3; /* Ensure the content appears above the canvas */
+	/* height: 200vh; */
+	width: 60vw;
+	/*background-color: red;*/
+}
+
+.content h1{
+	color: white; /* Set the font color */
+	font-family: Arial, sans-serif; /* Set the font family */
+}

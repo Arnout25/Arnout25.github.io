@@ -1,17 +1,25 @@
 "use strict";
-// var boxes = document.querySelectorAll('.box');
-// document.addEventListener("DOMContentLoaded", function() {
-// 	boxes = document.querySelectorAll('.box');
-//   });
-function tiltImage(event) {
-    const container = event.currentTarget;
-    const containerRect = container.getBoundingClientRect();
-    const mouseX = event.clientX - containerRect.left;
-    const percentX = (mouseX / containerRect.width - 0.5) * 2;
-    const tiltAngle = 10 * Math.max(-1, Math.min(1, percentX));
-    container.style.transformOrigin = 'center center';
-    container.style.transform = `perspective(1000px) rotateY(${tiltAngle}deg)`;
+var titles = document.querySelectorAll('.Scaling');
+function scaleText() {
+    titles.forEach(title => {
+        var _a, _b, _c;
+        const t = title;
+        if (!(t.parentElement == null)) {
+            const parentWidth = (_a = title.parentElement) === null || _a === void 0 ? void 0 : _a.clientWidth;
+            if (!(parentWidth == null)) {
+                console.log('ttttouihaef', (_b = title.parentElement) === null || _b === void 0 ? void 0 : _b.id);
+                let titleFontSize = parentWidth * 0.06; /* Adjust the maximum font size as needed */
+                if (((_c = title.parentElement) === null || _c === void 0 ? void 0 : _c.className) == 'banner')
+                    titleFontSize = parentWidth * 0.05; /* Adjust the maximum font size as needed */
+                t.style.fontSize = `${titleFontSize}px`;
+                console.log(`${titleFontSize}px`);
+            }
+        }
+    });
 }
-// window.addEventListener('DOMContentLoaded', () => {
-// 	window.tiltImage = tiltImage;
-// });
+document.addEventListener("DOMContentLoaded", function () {
+    titles = document.querySelectorAll('.Scaling');
+    scaleText();
+});
+window.addEventListener('resize', scaleText);
+scaleText();

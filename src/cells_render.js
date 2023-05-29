@@ -292,7 +292,7 @@ function draw_cell_shader(gl, running, aspect_ratio, time, tiltX, tiltY) {
     gl.uniformMatrix4fv(transformationLoc, false, transformation);
     // gl.uniformMatrix4fv(transformationLoc, false, m4.identity());
     //console.log(m4.translation(0,0.1,0));
-    gl.uniform2f(startAnimationLoc, time * .001 * 80 - 100, 40);
+    gl.uniform2f(startAnimationLoc, time * .001 * 80 - 150, 40);
     if (running) {
         gl.uniform3f(notifyAnimationLoc, 0, 1, 1);
     }

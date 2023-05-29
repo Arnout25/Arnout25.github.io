@@ -190,7 +190,57 @@ function loop(time: number){
 	// console.log(mouseX, mouseY);
 
 	check_error();
+
+
+
+
+	boxes.forEach(box => {
+		const b = box as HTMLElement;
+		// Extract rotateY value, which represents the X-direction tilt
+		const rotateXRegex = /rotateY\(([-+]?\d*\.?\d+)\s*deg\)/;
+		const rotateXMatch = b.style.transform.match(rotateXRegex);
+		let rotateXValue = rotateXMatch ? parseFloat(rotateXMatch[1]) : null;
+
+		// Extract rotateX value, which represents the Y-direction tilt
+		const rotateYRegex = /rotateX\(([-+]?\d*\.?\d+)\s*deg\)/;
+		const rotateYMatch = b.style.transform.match(rotateYRegex);
+		let rotateYValue = rotateYMatch ? parseFloat(rotateYMatch[1]) : null;
+
+		if (rotateXValue == null)
+			rotateXValue = 0;
+		if (rotateYValue == null)
+			rotateYValue = 0;
+
+		let tiltAngleX = 0;
+		let tiltAngleY = 0
+		const containerRect = b.getBoundingClientRect();
+		if (
+			mouseX >= containerRect.left &&
+			mouseX <= containerRect.right &&
+			mouseY >= containerRect.top &&
+			mouseY <= containerRect.bottom
+		  ) {
+			const thisX = mouseX - containerRect.left;
+			const thisY = mouseY - containerRect.top;
+			const percentX = (thisX / containerRect.width - 0.5) * 2;
+			const percentY = (thisY / containerRect.height - 0.5) * 2;
+			tiltAngleX = 3 * Math.max(-1, Math.min(1, percentX));
+			tiltAngleY = 30 * Math.max(-1, Math.min(1, percentY));
+		}
+
+		tiltAngleX = .9 * rotateXValue + .1*tiltAngleX;
+		tiltAngleY = .9 * rotateYValue + .1*tiltAngleY;
+	
+		b.style.transformOrigin = 'center center';
+		b.style.transform = `perspective(1000px) rotateY(${tiltAngleX}deg) rotateX(${-tiltAngleY}deg)`;
+	});
 }
+
+let boxes = document.querySelectorAll('.box');
+document.addEventListener("DOMContentLoaded", function() {
+	boxes = document.querySelectorAll('.box');
+});
+
 
 function handleClick() {
 	console.log("Image clicked!");
@@ -294,9 +344,14 @@ function orientationchange(event: Event) {
 window.addEventListener("resize", resize);
 window.addEventListener("orientationchange", orientationchange);
 
+var mouseX: number = 0;
+var mouseY: number = 0;
 var tiltX: number = 0;
 var tiltY: number = 0;
 function updateMouse(event: MouseEvent) {
+
+	mouseX = event.clientX;
+	mouseY = event.clientY;
 	
 	let new_tiltX = (event.clientX/canvas.width  - 0.5)*.3;
 	let new_tiltY = (event.clientY/canvas.height - 0.5)*.3;
@@ -340,7 +395,7 @@ console.log('sss')
 var clicked = false;
 function updateClick(event: MouseEvent) {
 
-	if (canvas.height*0.25 < event.clientY && event.clientY < canvas.height*.75){
+	if (canvas.height*0.25 < event.clientY+window.scrollY && event.clientY+window.scrollY < canvas.height*.75){
 		clicked = true;
 	}
 };

@@ -15,7 +15,7 @@
     <div class="canvas-container">
       <canvas id="glcanvas" class = "canvas-object"></canvas>
       <!-- Button -->
-      <button onclick="window.location.href = 'shooter'; ">Space Shooter</button>
+      <button onclick="window.location.href = 'shooter'; " style="z-index: 5;">Space Shooter</button>
       <img src="./resources/downArrow.png"id="downArrow" class="down-arrow">
     </div>
 
@@ -23,22 +23,14 @@
       
       <div class="container">
         <!-- <div style="height: 200px;"></div> -->
-        <div class="box" onmousemove="tiltImage(event)">
-          <h2>Graphics Programming</h2>
-          <div class="image-wrapper">
-            <img src="./resources/Title_single2.png" style = "position: absolute; display: block;"alt="Image 1">
-          </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="box" id="graphics" onclick='window.location.href="graphics";'> <!--  onmousemove="tiltImage(event)" onmouseleave="resetContainer()"> -->
+          <h2 class="Scaling">Graphics Programming</h2> 
         </div>
-        <div class="box" onmousemove="tiltImage(event)">
-          <h2>3D Design</h2>
-          <img src="path/to/image2.jpg" alt="Image 2">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="box" id="design" onclick='window.location.href="design";'>
+          <h2 class="Scaling">3D Design</h2>
         </div>
-        <div class="box" onmousemove="tiltImage(event)">
-          <h2>Origami</h2>
-          <img src="path/to/image3.jpg" alt="Image 3">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="box" id="origami" onclick='window.location.href="origami";'>
+          <h2 class="Scaling">Origami</h2>
         </div>
         <!-- Add more boxes as needed -->
       </div>

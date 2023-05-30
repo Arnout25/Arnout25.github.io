@@ -172,6 +172,11 @@ body::-webkit-scrollbar-thumb {
 		flex-direction: column;
 		margin-top: 0px;
 	}
+
+	
+	.content p {
+		font-size: 32px;
+	}
 	
 	
 	.content-body img {

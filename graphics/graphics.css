@@ -157,7 +157,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-@media (max-width: 900px) {
+@media (max-aspect-ratio: 1/1) {
   
 	.content {
 		width: calc(100vw - 40px);

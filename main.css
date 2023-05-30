@@ -118,8 +118,9 @@ body::-webkit-scrollbar-thumb {
 #graphics {
 	background-image: url("./resources/banner1.png");
 }
-  
-@media (max-width: 800px) {
+
+
+@media (max-aspect-ratio: 1/1) {
   
 	.box {
 		box-sizing: border-box;

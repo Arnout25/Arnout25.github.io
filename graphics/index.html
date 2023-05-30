@@ -31,8 +31,8 @@
       
       <div class="content-body">
         <p>
-          Paths are traced for the screen-render, light sources and scatter seperately.
-          Source rays travel in all directions from a unidirectional source, optimised in preserving thread locality.
+          Paths are traced for the screen-render, light sources and scattering light seperately.
+          Source rays travel in all directions from a unidirectional light source, optimised in preserving thread locality.
           Voxels contain a crude probability density function stored in 32 bits per voxel, allowing for more precision by sampling better regions.
           This image shows a room primarily lit by scattered light trough a small window and door opening.
           
@@ -51,7 +51,7 @@
         <p>
           Rays from light sources get bounced around the scene, allowing for reflections of light sources appearing trough mirrored surfaces and refracting trough glass.
           This image shows 'sunlight' hitting a stained glass painting, projecting the image onto the floor, and bouncing trough the mirror strips to the walls.
-          Because of the sperarated scattering rays, this light can then be scattered to also light up the room according to the colorful patterns.
+          Because of the separate scattering rays, this light can then be scattered to also light up the room according to the colorful patterns.
           
         </p> 
         <img src="resources/stained-glass-room.png"></img>
@@ -60,7 +60,7 @@
       <div class="content-body">
         <p>
           These source rays also refract on entering different materials.
-          This image shows total internal refraction happening in the colored glass, causing the light rays to converge again in the center.
+          This image shows total internal reflection occuring in the colored glass, causing the light rays to converge again in the center.
           Again, this light is saved in the texture and is then available for the scatter to bounce around.
           
         </p> 
@@ -176,7 +176,7 @@
           <h3>[September 2021]</h3>
           <p>
             After figuring out a trick using a shader applied to an image in the programming app I used,
-            encoding 3d environments to pixel data en decoding it in glsl allowed for a rudamentary gpu raytrace pipeline. <br>
+            encoding 3d environments to pixel data and decoding it in glsl allowed for a rudamentary gpu raytrace pipeline. <br>
             First ray-tracer to run consistent at 60fps and high resolution.<br>
             Post-processing was not possible in this pipeline, so bloom was achieved trough a ray-object distance calculation.
           </p> 
@@ -220,7 +220,7 @@
           <h3>[August 2022]</h3>
           <p>
             Full path tracing, with stochastic rays for scattering.
-            Also has some features to try to improve performance, such as sampling the image instead of object if scatter ray bounce stays in screenspace,
+            Also has some features to try to improve performance, such as sampling the image for light-data when a scatter ray stays in screenspace,
             and sampling the previous frame for each pixel for what I later learned is temporal accumulation.
             Worked well realtime but still a bit noisy.
           </p> 

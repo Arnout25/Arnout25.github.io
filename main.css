@@ -119,7 +119,7 @@ body::-webkit-scrollbar-thumb {
 	background-image: url("./resources/banner1.png");
 }
   
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   
 	.box {
 		box-sizing: border-box;
@@ -130,7 +130,7 @@ body::-webkit-scrollbar-thumb {
 	/* .box h2 {
 		transform: translate(-50%, -50%) scale(1.5);
 	  } */
-  }
+}
   
   .box img {
 	width: 100px;

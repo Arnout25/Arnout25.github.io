@@ -1,10 +1,27 @@
 body {
-	place-items: center;
-	text-align: center;
+	display: flex;
+	/* place-items: center; */
+	/* text-align: left; */
 	justify-content: center;
-	align-items: center;
+	/* align-items: center; */
 
 	background-color: rgb(27,24,37);
+
+	color: white;
+	font-family: Arial, sans-serif; /* Set the font family */
+}
+
+
+body::-webkit-scrollbar {
+	width: 0em;
+}
+
+body::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: transparent;
 }
 
 .banner {
@@ -47,13 +64,124 @@ body {
 
 .content {
 	margin-top: 40vh; /* Adjust this value to leave space for the canvas */
+	margin-bottom: 40vh;
 	z-index: 3; /* Ensure the content appears above the canvas */
 	/* height: 200vh; */
 	width: 60vw;
 	/*background-color: red;*/
+	/* background-color: red; Set the font color */
+	justify-content: center;
+	text-align: justify;
+	
+	/* display: flex; */
+  
 }
 
-.content h1{
-	color: white; /* Set the font color */
-	font-family: Arial, sans-serif; /* Set the font family */
+
+.spacer {
+	height: 100px;
+}
+
+
+.content h2 {
+	margin-left: 5px;
+	margin-right: 30px;
+}
+.content h3 {
+	margin-top: -15px;
+	margin-left: 5px;
+	margin-right: 30px;
+	color: rgb(159, 159, 159);
+}
+.content p {
+	margin-left: 5px;
+	margin-right: 30px;
+}
+
+.content-body img {
+	/* align-content: right; */
+  
+	width: 30vw;
+
+	max-width: 100%;
+	height: auto;
+	
+	object-fit: contain;
+
+	margin: 5px;
+	margin-left: auto;
+	margin-right: 0px;
+
+}
+
+
+
+.content-body {
+	display: flex;
+
+	text-align: justify;
+	
+	margin-top: 30px;
+  
+}
+
+
+.images-body {
+	display: flex;
+
+	/* place-items: center; */
+	/* text-align: left; */
+	justify-content: center;
+	align-items: center;
+
+	/* text-align: justify; */
+	
+	margin-top: 30px;
+
+	/* margin-left: 10vw; */
+	/* margin-right: 10vw; */
+  
+}
+
+
+
+.images-body img {
+	max-width: 100%;
+	/* max-height: 100%; */
+	/* object-fit: contain; */
+	height: 400px; /* Set the desired height for the images */
+	width: auto;
+	/* object-fit: cover; */
+	margin: 5px;
+  
+}
+
+
+@media (max-width: 900px) {
+  
+	.content {
+		width: calc(100vw - 40px);
+	}
+
+	.content-body{
+		flex-direction: column;
+	}
+	
+	.images-body{
+		flex-direction: column;
+		margin-top: 0px;
+	}
+	
+	
+	.content-body img {
+		/* align-content: right; */
+		width: 100vw;
+
+	}
+
+	.images-body img {
+		/* height: auto; */
+		height: auto;
+		width: 100vw;
+	}
 }

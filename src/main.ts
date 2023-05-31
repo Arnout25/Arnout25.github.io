@@ -214,11 +214,15 @@ function loop(time: number){
 		let tiltAngleX = 0;
 		let tiltAngleY = 0
 		const containerRect = b.getBoundingClientRect();
+		// console.log('m',mouseX, mouseY);
+		// console.log(b.offsetLeft, b.offsetTop);
+		// console.log(b.scrollHeight);
+		// console.log(b.offsetLeft)
 		if (
-			mouseX >= containerRect.left &&
-			mouseX <= containerRect.right &&
-			mouseY >= containerRect.top &&
-			mouseY <= containerRect.bottom
+			mouseX >= b.offsetLeft-window.scrollX && // containerRect.left &&
+			mouseX <= b.offsetLeft+b.offsetWidth-window.scrollX && // containerRect.right &&
+			mouseY >= b.offsetTop-window.scrollY && // containerRect.top &&
+			mouseY <= b.offsetTop+b.offsetHeight-window.scrollY // containerRect.bottom
 		  ) {
 			const thisX = mouseX - containerRect.left;
 			const thisY = mouseY - containerRect.top;

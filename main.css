@@ -115,11 +115,6 @@ body::-webkit-scrollbar-thumb {
   }
 
 
-#graphics {
-	background-image: url("./resources/banner1.png");
-}
-
-
 @media (max-aspect-ratio: 1/1) {
   
 	.box {

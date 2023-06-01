@@ -257,6 +257,8 @@ window.addEventListener('wheel', (event) => {
     }, 100);
 });
 function resize(event) {
+    //window.scrollY = window.scrollY /canvas.height * window.innerHeight;
+    window.scrollTo(0, window.scrollY / canvas.height * window.innerHeight);
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }

@@ -338,8 +338,12 @@ window.addEventListener('wheel', (event) => {
 
 function resize(event: UIEvent) {
 
+	//adjust the scroll along with window resize
+	window.scrollTo(0, window.scrollY /canvas.height * window.innerHeight)
+
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.height = window.innerHeight; 
+
 }
 function orientationchange(event: Event) {
 	canvas.width = window.innerWidth;

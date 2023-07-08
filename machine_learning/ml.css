@@ -1,0 +1,204 @@
+body {
+	display: flex;
+	/* place-items: center; */
+	/* text-align: left; */
+	justify-content: center;
+	/* align-items: center; */
+
+	background-color: rgb(27,24,37);
+
+	color: white;
+	font-family: Arial, sans-serif; /* Set the font family */
+
+	font-size: 100%;
+	
+	user-select: none;
+}
+
+
+body::-webkit-scrollbar {
+	width: 0em;
+}
+
+body::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: transparent;
+}
+
+.banner {
+	position: absolute;
+	display: flex;
+
+	place-items: center;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin-bottom: 20px;
+	background-color: black;
+	width: 100vw;
+	height: 30vh;
+	
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	
+	background-image: url("./../resources/banner1.png");
+}
+
+
+.banner h2 {
+	font-size: clamp(10px, 10vw, 64px);
+	color: white; /* Set the font color */
+	font-family: Arial, sans-serif; /* Set the font family */
+	position: absolute; /* Position the text element within the parent */
+
+	white-space: nowrap; /* Force single line */
+	overflow: hidden; /* Hide overflowing text */
+	text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+	z-index: 10;
+}
+
+
+.content {
+	margin-top: 40vh; /* Adjust this value to leave space for the canvas */
+	margin-bottom: 40vh;
+	z-index: 3; /* Ensure the content appears above the canvas */
+	/* height: 200vh; */
+	width: 60vw;
+	/*background-color: red;*/
+	/* background-color: red; Set the font color */
+	justify-content: center;
+	text-align: justify;
+	
+	/* display: flex; */
+  
+}
+
+
+.spacer {
+	height: 100px;
+}
+
+.content h1 {
+	font-size: 3em;
+	margin-left: 5px;
+	margin-right: 30px;
+}
+
+.content h2 {
+	font-size: 2.2em;
+	margin-left: 5px;
+	margin-right: 30px;
+}
+.content h3 {
+	font-size: 1.6em;
+	margin-top: -15px;
+	margin-left: 5px;
+	margin-right: 30px;
+	color: rgb(159, 159, 159);
+}
+.content p {
+	font-size: 1.2em;
+	margin-left: 5px;
+	margin-right: 30px;
+}
+
+.content-body img {
+	/* align-content: right; */
+  
+	width: 30vw;
+
+	max-width: 100%;
+	height: auto;
+	
+	object-fit: contain;
+
+	margin: 5px;
+	margin-left: auto;
+	margin-right: 0px;
+
+}
+
+
+
+.content-body {
+	display: flex;
+
+	text-align: justify;
+	
+	margin-top: 30px;
+  
+}
+
+
+.images-body {
+	display: flex;
+
+	/* place-items: center; */
+	/* text-align: left; */
+	justify-content: center;
+	align-items: center;
+
+	/* text-align: justify; */
+	
+	margin-top: 30px;
+
+	/* margin-left: 10vw; */
+	/* margin-right: 10vw; */
+  
+}
+
+
+
+.images-body img {
+	max-width: 100%;
+	/* max-height: 100%; */
+	/* object-fit: contain; */
+	height: 400px; /* Set the desired height for the images */
+	width: auto;
+	/* object-fit: cover; */
+	margin: 5px;
+  
+}
+
+
+@media (max-aspect-ratio: 1/1) {
+  
+	.content {
+		width: calc(100vw - 40px);
+	}
+
+	.content-body{
+		flex-direction: column;
+	}
+	
+	.images-body{
+		flex-direction: column;
+		margin-top: 0px;
+	}
+
+	
+	/* .content p {
+		font-size: 32px;
+	} */
+	
+	
+	.content-body img {
+		/* align-content: right; */
+		width: 100vw;
+
+	}
+
+	.images-body img {
+		/* height: auto; */
+		height: auto;
+		width: 100vw;
+	}
+}

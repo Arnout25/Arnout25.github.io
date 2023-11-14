@@ -294,11 +294,6 @@ function handleDeviceOrientation(event) {
     }
 }
 window.addEventListener('deviceorientation', handleDeviceOrientation);
-// interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
-// 	requestPermission?: () => Promise<'granted' | 'denied'>;
-//   }
-// const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
-let requestPermission = null;
 try {
     const requestPermission = DeviceOrientationEvent.requestPermission;
     // Use requestPermission here if it exists
@@ -307,9 +302,9 @@ try {
         if (iOS) {
             console.log('ios');
             requestPermission().then(response => {
-                if (response == 'granted') {
-                    console.log('granted!');
-                }
+                // if (response == 'granted') {
+                // 	console.log('granted!')
+                // }
             });
         }
     }
@@ -322,7 +317,6 @@ catch (error) {
     // Handle any other errors that might occur
     console.error("An error occurred:", error);
 }
-console.log('sss');
 var clicked = false;
 function updateClick(event) {
     if (canvas.height * 0.25 < event.clientY + window.scrollY && event.clientY + window.scrollY < canvas.height * .75) {

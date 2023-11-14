@@ -383,14 +383,8 @@ function handleDeviceOrientation(event: DeviceOrientationEvent): void {
 
 window.addEventListener('deviceorientation', handleDeviceOrientation);
 
-// interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
-// 	requestPermission?: () => Promise<'granted' | 'denied'>;
-//   }
-  
-// const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
-
-let requestPermission = null;
 try {
+	//try because if in http (not secure), DeviceOrientationEvent would throw error
 	interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
 	  requestPermission?: () => Promise<'granted' | 'denied'>;
 	}
@@ -403,9 +397,9 @@ try {
 		if (iOS) {
 			console.log('ios')
 			requestPermission().then(response => {
-				if (response == 'granted') {
-					console.log('granted!')
-				}
+				// if (response == 'granted') {
+				// 	console.log('granted!')
+				// }
 			})
 		}
 	} else {
@@ -417,8 +411,6 @@ try {
 	console.error("An error occurred:", error);
 }
 
-
-console.log('sss')
 
 var clicked = false;
 function updateClick(event: MouseEvent) {

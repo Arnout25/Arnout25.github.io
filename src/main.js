@@ -154,6 +154,7 @@ function loop(time) {
         // Extract rotateX value, which represents the Y-direction tilt
         const rotateYRegex = /rotateX\(([-+]?\d*\.?\d+)\s*deg\)/;
         const rotateYMatch = b.style.transform.match(rotateYRegex);
+        
         let rotateYValue = rotateYMatch ? parseFloat(rotateYMatch[1]) : null;
         if (rotateXValue == null)
             rotateXValue = 0;
@@ -162,26 +163,23 @@ function loop(time) {
         let tiltAngleX = 0;
         let tiltAngleY = 0;
         const containerRect = b.getBoundingClientRect();
-        // console.log('m',mouseX, mouseY);
-        // console.log(b.offsetLeft, b.offsetTop);
-        // console.log(b.scrollHeight);
-        // console.log(b.offsetLeft)
-        if (mouseX >= b.offsetLeft - window.scrollX && // containerRect.left &&
-            mouseX <= b.offsetLeft + b.offsetWidth - window.scrollX && // containerRect.right &&
-            mouseY >= b.offsetTop - window.scrollY && // containerRect.top &&
-            mouseY <= b.offsetTop + b.offsetHeight - window.scrollY // containerRect.bottom
+        
+        if (mouseX >= b.offsetLeft - window.scrollX &&
+            mouseX <= b.offsetLeft + b.offsetWidth - window.scrollX &&
+            mouseY >= b.offsetTop - window.scrollY &&
+            mouseY <= b.offsetTop + b.offsetHeight - window.scrollY
         ) {
             const thisX = mouseX - containerRect.left;
             const thisY = mouseY - containerRect.top;
             const percentX = (thisX / containerRect.width - 0.5) * 2;
             const percentY = (thisY / containerRect.height - 0.5) * 2;
             tiltAngleX = 3 * Math.max(-1, Math.min(1, percentX));
-            tiltAngleY = 30 * Math.max(-1, Math.min(1, percentY));
+            tiltAngleY = - 4 * Math.max(-1, Math.min(1, percentY));
         }
-        tiltAngleX = .9 * rotateXValue + .1 * tiltAngleX;
-        tiltAngleY = .9 * rotateYValue + .1 * tiltAngleY;
+        tiltAngleX = .7 * rotateXValue + .3 * tiltAngleX;
+        tiltAngleY = .7 * rotateYValue + .3 * tiltAngleY;
         b.style.transformOrigin = 'center center';
-        b.style.transform = `perspective(1000px) rotateY(${tiltAngleX}deg) rotateX(${-tiltAngleY}deg)`;
+        b.style.transform = `perspective(1000px) rotateY(${tiltAngleX}deg) rotateX(${tiltAngleY}deg)`;
     });
 }
 let boxes = document.querySelectorAll('.box');
@@ -304,7 +302,7 @@ if (iOS) {
         }
     });
 }
-console.log('sss');
+
 var clicked = false;
 function updateClick(event) {
     if (canvas.height * 0.25 < event.clientY + window.scrollY && event.clientY + window.scrollY < canvas.height * .75) {

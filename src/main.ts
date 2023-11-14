@@ -229,14 +229,14 @@ function loop(time: number){
 			const percentX = (thisX / containerRect.width - 0.5) * 2;
 			const percentY = (thisY / containerRect.height - 0.5) * 2;
 			tiltAngleX = 3 * Math.max(-1, Math.min(1, percentX));
-			tiltAngleY = 30 * Math.max(-1, Math.min(1, percentY));
+			tiltAngleY = -4 * Math.max(-1, Math.min(1, percentY));
 		}
 
-		tiltAngleX = .9 * rotateXValue + .1*tiltAngleX;
-		tiltAngleY = .9 * rotateYValue + .1*tiltAngleY;
+        tiltAngleX = .7 * rotateXValue + .3 * tiltAngleX;
+        tiltAngleY = .7 * rotateYValue + .3 * tiltAngleY;
 	
 		b.style.transformOrigin = 'center center';
-		b.style.transform = `perspective(1000px) rotateY(${tiltAngleX}deg) rotateX(${-tiltAngleY}deg)`;
+		b.style.transform = `perspective(1000px) rotateY(${tiltAngleX}deg) rotateX(${tiltAngleY}deg)`;
 	});
 }
 
@@ -382,21 +382,41 @@ function handleDeviceOrientation(event: DeviceOrientationEvent): void {
 }
 
 window.addEventListener('deviceorientation', handleDeviceOrientation);
+
+// interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
+// 	requestPermission?: () => Promise<'granted' | 'denied'>;
+//   }
   
-interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
-	requestPermission?: () => Promise<'granted' | 'denied'>;
-  }
-  
-const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
-const iOS = typeof requestPermission === 'function';
-if (iOS) {
-	console.log('ios')
-	requestPermission().then(response => {
-		if (response == 'granted') {
-			console.log('granted!')
+// const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
+
+let requestPermission = null;
+try {
+	interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
+	  requestPermission?: () => Promise<'granted' | 'denied'>;
+	}
+
+	const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
+
+	// Use requestPermission here if it exists
+	if (requestPermission) {
+		const iOS = typeof requestPermission === 'function';
+		if (iOS) {
+			console.log('ios')
+			requestPermission().then(response => {
+				if (response == 'granted') {
+					console.log('granted!')
+				}
+			})
 		}
-	})
+	} else {
+	  // Handle the case where requestPermission is not available
+	  console.warn("DeviceOrientationEventiOS is not supported on this platform.");
+	}
+} catch (error) {
+	// Handle any other errors that might occur
+	console.error("An error occurred:", error);
 }
+
 
 console.log('sss')
 

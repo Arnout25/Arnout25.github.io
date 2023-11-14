@@ -6,13 +6,13 @@ function scaleText() {
 		if (!(t.parentElement == null)){
 			const parentWidth = title.parentElement?.clientWidth;
 			if (!(parentWidth == null)){
-				console.log('ttttouihaef', title.parentElement?.id)
+				// console.log('ttttouihaef', title.parentElement?.id)
 				let titleFontSize = parentWidth * 0.06; /* Adjust the maximum font size as needed */
 				if (title.parentElement?.className == 'banner')
 					titleFontSize = parentWidth * 0.05; /* Adjust the maximum font size as needed */
 		
 				t.style.fontSize = `${titleFontSize}px`;
-				console.log(`${titleFontSize}px`)
+				// console.log(`${titleFontSize}px`)
 			}
 		}
 	});

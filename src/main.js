@@ -154,7 +154,6 @@ function loop(time) {
         // Extract rotateX value, which represents the Y-direction tilt
         const rotateYRegex = /rotateX\(([-+]?\d*\.?\d+)\s*deg\)/;
         const rotateYMatch = b.style.transform.match(rotateYRegex);
-        
         let rotateYValue = rotateYMatch ? parseFloat(rotateYMatch[1]) : null;
         if (rotateXValue == null)
             rotateXValue = 0;
@@ -163,18 +162,21 @@ function loop(time) {
         let tiltAngleX = 0;
         let tiltAngleY = 0;
         const containerRect = b.getBoundingClientRect();
-        
-        if (mouseX >= b.offsetLeft - window.scrollX &&
-            mouseX <= b.offsetLeft + b.offsetWidth - window.scrollX &&
-            mouseY >= b.offsetTop - window.scrollY &&
-            mouseY <= b.offsetTop + b.offsetHeight - window.scrollY
+        // console.log('m',mouseX, mouseY);
+        // console.log(b.offsetLeft, b.offsetTop);
+        // console.log(b.scrollHeight);
+        // console.log(b.offsetLeft)
+        if (mouseX >= b.offsetLeft - window.scrollX && // containerRect.left &&
+            mouseX <= b.offsetLeft + b.offsetWidth - window.scrollX && // containerRect.right &&
+            mouseY >= b.offsetTop - window.scrollY && // containerRect.top &&
+            mouseY <= b.offsetTop + b.offsetHeight - window.scrollY // containerRect.bottom
         ) {
             const thisX = mouseX - containerRect.left;
             const thisY = mouseY - containerRect.top;
             const percentX = (thisX / containerRect.width - 0.5) * 2;
             const percentY = (thisY / containerRect.height - 0.5) * 2;
             tiltAngleX = 3 * Math.max(-1, Math.min(1, percentX));
-            tiltAngleY = - 4 * Math.max(-1, Math.min(1, percentY));
+            tiltAngleY = -4 * Math.max(-1, Math.min(1, percentY));
         }
         tiltAngleX = .7 * rotateXValue + .3 * tiltAngleX;
         tiltAngleY = .7 * rotateYValue + .3 * tiltAngleY;
@@ -255,7 +257,7 @@ window.addEventListener('wheel', (event) => {
     }, 100);
 });
 function resize(event) {
-    //window.scrollY = window.scrollY /canvas.height * window.innerHeight;
+    //adjust the scroll along with window resize
     window.scrollTo(0, window.scrollY / canvas.height * window.innerHeight);
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -292,17 +294,35 @@ function handleDeviceOrientation(event) {
     }
 }
 window.addEventListener('deviceorientation', handleDeviceOrientation);
-const requestPermission = DeviceOrientationEvent.requestPermission;
-const iOS = typeof requestPermission === 'function';
-if (iOS) {
-    console.log('ios');
-    requestPermission().then(response => {
-        if (response == 'granted') {
-            console.log('granted!');
+// interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
+// 	requestPermission?: () => Promise<'granted' | 'denied'>;
+//   }
+// const requestPermission = (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission;
+let requestPermission = null;
+try {
+    const requestPermission = DeviceOrientationEvent.requestPermission;
+    // Use requestPermission here if it exists
+    if (requestPermission) {
+        const iOS = typeof requestPermission === 'function';
+        if (iOS) {
+            console.log('ios');
+            requestPermission().then(response => {
+                if (response == 'granted') {
+                    console.log('granted!');
+                }
+            });
         }
-    });
+    }
+    else {
+        // Handle the case where requestPermission is not available
+        console.warn("DeviceOrientationEventiOS is not supported on this platform.");
+    }
 }
-
+catch (error) {
+    // Handle any other errors that might occur
+    console.error("An error occurred:", error);
+}
+console.log('sss');
 var clicked = false;
 function updateClick(event) {
     if (canvas.height * 0.25 < event.clientY + window.scrollY && event.clientY + window.scrollY < canvas.height * .75) {

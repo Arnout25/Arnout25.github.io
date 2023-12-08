@@ -138,6 +138,7 @@ function loop(time: number){
 		clicked = false;
 		if (time > 2){
 			automaton_running = true;
+			// ga('send', 'event', 'LinkClicked', 'Click', 'LinkedIn from main'); return false;
 		}
 	}
 

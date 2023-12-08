@@ -63,7 +63,7 @@ body::-webkit-scrollbar-thumb {
 .content {
 	margin-top: 100vh; /* Adjust this value to leave space for the canvas */
 	z-index: 3; /* Ensure the content appears above the canvas */
-	height: 200vh;
+	/* height: 200vh; */
 	/*background-color: red;*/
 }
 
@@ -130,11 +130,21 @@ body::-webkit-scrollbar-thumb {
 	  } */
 }
   
-  .box img {
+.box img {
 	width: 100px;
 	height: 100px;
 	object-fit: cover;
 	border-radius: 50%;
 	margin-bottom: 10px;
+}
+
+.footer {
+	position: absolute; /* or "absolute" depending on your preference */
+	right: 100px; /* adjust the right spacing as needed */
+	z-index: 1000; /* adjust the z-index as needed to ensure it's above other elements */
   }
 
+.footer img {
+	width: 100px; /* adjust the width of the logo as needed */
+	height: auto; /* maintain aspect ratio */
+}

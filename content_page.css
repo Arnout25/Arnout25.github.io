@@ -65,7 +65,7 @@ body::-webkit-scrollbar-thumb {
 
 
 .content {
-	margin-top: 40vh; /* Adjust this value to leave space for the canvas */
+	margin-top: 33vh; /* Adjust this value to leave space for the canvas */
 	margin-bottom: 0vh;
 	z-index: 3; /* Ensure the content appears above the canvas */
 	/* height: 200vh; */
@@ -204,13 +204,12 @@ body::-webkit-scrollbar-thumb {
 
 .footer {
 	display: flex;
-	right: 100px; /* adjust the right spacing as needed */
 	z-index: 1000;
 	
 	justify-content:right
   }
 
 .footer img {
-	width: 50px;
+	width: 7vh;
 	height: auto;
 }

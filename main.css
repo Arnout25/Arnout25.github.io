@@ -106,7 +106,7 @@ body::-webkit-scrollbar-thumb {
 
 
 .box h2 {
-  	font-size: clamp(10px, 10vw, 64px);
+  	font-size: clamp(1vw, 4vw, 5vw); /* done in html_functions */
 	color: white; /* Set the font color */
 	font-family: Arial, sans-serif; /* Set the font family */
 	position: absolute; /* Position the text element within the parent */

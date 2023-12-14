@@ -8,9 +8,9 @@ function scaleText() {
             const parentWidth = (_a = title.parentElement) === null || _a === void 0 ? void 0 : _a.clientWidth;
             if (!(parentWidth == null)) {
                 // console.log('ttttouihaef', title.parentElement?.id)
-                let titleFontSize = parentWidth * 0.06; /* Adjust the maximum font size as needed */
+                let titleFontSize = parentWidth * 0.06;
                 if (((_b = title.parentElement) === null || _b === void 0 ? void 0 : _b.className) == 'banner')
-                    titleFontSize = parentWidth * 0.05; /* Adjust the maximum font size as needed */
+                    titleFontSize = parentWidth * 0.05;
                 t.style.fontSize = `${titleFontSize}px`;
                 // console.log(`${titleFontSize}px`)
             }

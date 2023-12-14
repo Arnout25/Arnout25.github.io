@@ -191,6 +191,21 @@ body::-webkit-scrollbar-thumb {
 		font-size: 1.3em;
 	} */
 	
+	.content h1 {
+		font-size: 5.1vw;
+	}
+
+	.content h2 {
+		font-size: 4.2vw;
+	}
+	.content h3 {
+		font-size: 3.4vw;
+	}
+	.content p {
+		font-size: 2.8vw;
+		line-height: 3.9vw;
+	}
+	
 	
 	.content-body img {
 		/* align-content: right; */

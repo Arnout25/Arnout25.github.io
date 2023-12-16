@@ -168,9 +168,28 @@ body::-webkit-scrollbar-thumb {
 }
 
 
+.footer {
+	display: flex;
+	z-index: 1000;
+	
+	justify-content:right;
+	padding: 0px;
+  }
+
+.footer img {
+	width: 6vh;
+	height: auto;
+}
+
+
 @media (max-aspect-ratio: 1/1) {
+
+	.banner {
+		height: 36vw;
+	}
   
 	.content {
+		margin-top: 40vw;
 		width: calc(100vw - 40px);
 	}
 
@@ -192,7 +211,7 @@ body::-webkit-scrollbar-thumb {
 	} */
 	
 	.content h1 {
-		font-size: 5.5vw;
+		font-size: 5.2vw;
 	}
 
 	.content h2 {
@@ -202,8 +221,10 @@ body::-webkit-scrollbar-thumb {
 		font-size: 3.8vw;
 	}
 	.content p {
-		font-size: 3.1vw;
-		line-height: 4.1vw;
+		font-size: 3.4vw;
+		line-height: 4.6vw;
+		margin-left: 0px;
+		margin-right: 0px;
 	}
 	
 	
@@ -218,17 +239,10 @@ body::-webkit-scrollbar-thumb {
 		height: auto;
 		width: 100vw;
 	}
-}
-
-
-.footer {
-	display: flex;
-	z-index: 1000;
 	
-	justify-content:right
-  }
-
-.footer img {
-	width: 7vh;
-	height: auto;
+	.footer img {
+		width: 9vw;
+		height: auto;
+	}
 }
+
